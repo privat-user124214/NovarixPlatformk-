@@ -174,7 +174,7 @@ export default function Legal() {
             
             <div>
               <h4 className="font-medium text-white mb-2">Datenschutz</h4>
-              <p className="text-novarix-text">
+              <p className="text-[#3c445c]">
                 <a 
                   href="mailto:datenschutz@novarix-studio.de"
                   className="text-novarix-purple hover:text-novarix-purple-light underline"
@@ -186,7 +186,7 @@ export default function Legal() {
             
             <div>
               <h4 className="font-medium text-white mb-2">Discord Support</h4>
-              <p className="text-novarix-text">
+              <p className="text-[#3c445c]">
                 <a 
                   href="http://dc.novarix-studio.de"
                   target="_blank"

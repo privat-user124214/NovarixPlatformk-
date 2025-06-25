@@ -105,7 +105,7 @@ export default function Login() {
           </form>
           
           <div className="mt-6 text-center">
-            <p className="text-sm text-novarix-muted">
+            <p className="text-sm text-[#3c445c]">
               Noch kein Account?{" "}
               <Link href="/register">
                 <a className="text-novarix-purple hover:text-novarix-purple-light">

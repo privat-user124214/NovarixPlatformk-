@@ -28,7 +28,7 @@
   --novarix-bg: hsl(217, 19%, 9%);
   --novarix-bg-secondary: hsl(215, 16%, 12%);
   --novarix-bg-tertiary: hsl(215, 20%, 17%);
-  --novarix-text: hsl(217, 10%, 75%);
+  --novarix-text: #3c445c;
   --novarix-text-secondary: hsl(215, 15%, 65%);
   --novarix-text-muted: hsl(215, 10%, 40%);
   --novarix-purple: hsl(262, 83%, 58%);

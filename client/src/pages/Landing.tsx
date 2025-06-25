@@ -13,7 +13,7 @@ export default function Landing() {
             <h1 className="text-2xl font-bold text-white">Novarix Studio</h1>
             <div className="space-x-4">
               <Link href="/login">
-                <Button variant="ghost" className="text-novarix-text hover:text-white">
+                <Button variant="ghost" className="text-[#3c445c] hover:text-white">
                   Anmelden
                 </Button>
               </Link>
@@ -36,7 +36,7 @@ export default function Landing() {
               <Info className="h-6 w-6 text-novarix-purple mr-3" />
               <div>
                 <h3 className="text-lg font-medium text-white">Wichtiger Hinweis</h3>
-                <p className="text-novarix-text mt-1">
+                <p className="text-[#3c445c] mt-1">
                   Wir entwickeln keine eigenen Bots mehr – bieten aber individuelle Bot-Entwicklung auf Anfrage an.
                 </p>
               </div>
@@ -49,7 +49,7 @@ export default function Landing() {
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             Professionelle Bot-Entwicklung
           </h1>
-          <p className="text-xl text-novarix-text mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-[#3c445c] mb-8 max-w-3xl mx-auto">
             Individuelle Discord-Bot-Entwicklung für Ihr Projekt. Von Security-Systemen bis zu 
             benutzerdefinierten Funktionen – wir realisieren Ihre Bot-Ideen.
           </p>
@@ -60,7 +60,7 @@ export default function Landing() {
               </Button>
             </Link>
             <Link href="/login">
-              <Button size="lg" variant="outline" className="border-novarix-border text-novarix-text hover:bg-novarix-secondary">
+              <Button size="lg" variant="outline" className="border-novarix-border text-[#3c445c] hover:bg-novarix-secondary">
                 Anmelden
               </Button>
             </Link>
@@ -73,7 +73,7 @@ export default function Landing() {
             <CardHeader>
               <Bot className="h-12 w-12 text-novarix-purple mb-4" />
               <CardTitle className="text-white">Individuelle Entwicklung</CardTitle>
-              <CardDescription className="text-novarix-text">
+              <CardDescription className="text-[#3c445c]">
                 Maßgeschneiderte Discord-Bots nach Ihren spezifischen Anforderungen
               </CardDescription>
             </CardHeader>
@@ -107,7 +107,7 @@ export default function Landing() {
               <Shield className="h-6 w-6 text-yellow-500 mr-3" />
               <div>
                 <h3 className="text-lg font-medium text-white">Branding-Hinweis</h3>
-                <p className="text-novarix-text mt-1">
+                <p className="text-[#3c445c] mt-1">
                   Bei jedem Auftrag ist unsere Branding-Werbung verpflichtend und darf nicht entfernt werden.
                 </p>
               </div>

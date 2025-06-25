@@ -87,7 +87,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                       group flex items-center px-2 py-2 text-sm font-medium rounded-md
                       ${isActive(item.href)
                         ? 'bg-novarix-purple text-white'
-                        : 'text-novarix-muted hover:text-white hover:bg-novarix-tertiary'
+                        : 'text-[#3c445c] hover:text-white hover:bg-novarix-tertiary'
                       }
                     `}
                     onClick={onClose}
@@ -104,7 +104,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           <div className="px-2 pb-4">
             <div className="bg-novarix-tertiary p-4 rounded-lg">
               <h3 className="text-sm font-medium text-white mb-2">Kontakt</h3>
-              <div className="space-y-2 text-xs text-novarix-muted">
+              <div className="space-y-2 text-xs text-[#3c445c]">
                 <div className="flex items-center">
                   <Mail className="mr-2 h-3 w-3" />
                   <a 

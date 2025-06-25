@@ -83,7 +83,7 @@ export default function Register() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="firstName" className="text-novarix-text">Vorname</Label>
+                <Label htmlFor="firstName" className="text-[#3c445c]">Vorname</Label>
                 <Input
                   id="firstName"
                   name="firstName"
@@ -94,7 +94,7 @@ export default function Register() {
                 />
               </div>
               <div>
-                <Label htmlFor="lastName" className="text-novarix-text">Nachname</Label>
+                <Label htmlFor="lastName" className="text-[#3c445c]">Nachname</Label>
                 <Input
                   id="lastName"
                   name="lastName"
@@ -107,7 +107,7 @@ export default function Register() {
             </div>
             
             <div>
-              <Label htmlFor="email" className="text-novarix-text">E-Mail</Label>
+              <Label htmlFor="email" className="text-[#3c445c]">E-Mail</Label>
               <Input
                 id="email"
                 name="email"
@@ -121,7 +121,7 @@ export default function Register() {
             </div>
             
             <div>
-              <Label htmlFor="password" className="text-novarix-text">Passwort</Label>
+              <Label htmlFor="password" className="text-[#3c445c]">Passwort</Label>
               <Input
                 id="password"
                 name="password"
@@ -135,7 +135,7 @@ export default function Register() {
             </div>
             
             <div>
-              <Label htmlFor="confirmPassword" className="text-novarix-text">Passwort bestätigen</Label>
+              <Label htmlFor="confirmPassword" className="text-[#3c445c]">Passwort bestätigen</Label>
               <Input
                 id="confirmPassword"
                 name="confirmPassword"
