@@ -2,13 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Mail, Globe, CheckCircle } from "lucide-react";
+import { ExternalLink, Mail, Globe } from "lucide-react";
 import { LandingHeader } from "@/components/LandingHeader";
-import { useAuth } from "@/hooks/useAuth";
 import type { Partner } from "@shared/schema";
+import verifiedBadge from "@/assets/verified-badge.svg";
 
 export default function Partners() {
-  const { isAuthenticated } = useAuth();
   const { data: partners, isLoading, error } = useQuery<Partner[]>({
     queryKey: ["/api/partners"],
     retry: false,
@@ -16,9 +15,9 @@ export default function Partners() {
 
   if (isLoading) {
     return (
-      <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
-        {!isAuthenticated && <LandingHeader />}
-        <div className={`space-y-8 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
+      <div className="min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary">
+        <LandingHeader />
+        <div className="space-y-8 container mx-auto px-4 py-16">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
             <p className="text-novarix-text">
@@ -64,9 +63,9 @@ export default function Partners() {
 
   if (error) {
     return (
-      <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
-        {!isAuthenticated && <LandingHeader />}
-        <div className={`text-center py-12 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
+      <div className="min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary">
+        <LandingHeader />
+        <div className="text-center py-12 container mx-auto px-4 py-16">
           <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
           <p className="text-red-400">Fehler beim Laden der Partner</p>
         </div>
@@ -76,9 +75,9 @@ export default function Partners() {
 
   if (!partners || partners.length === 0) {
     return (
-      <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
-        {!isAuthenticated && <LandingHeader />}
-        <div className={`text-center py-12 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
+      <div className="min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary">
+        <LandingHeader />
+        <div className="text-center py-12 container mx-auto px-4 py-16">
           <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
           <p className="text-novarix-text">
             Derzeit sind keine Partner verfügbar.
@@ -89,9 +88,9 @@ export default function Partners() {
   }
 
   return (
-    <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
-      {!isAuthenticated && <LandingHeader />}
-      <div className={`space-y-8 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
+    <div className="min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary">
+      <LandingHeader />
+      <div className="space-y-8 container mx-auto px-4 py-16">
       {/* Header */}
       <div className="text-center">
         <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
@@ -112,7 +111,11 @@ export default function Partners() {
                     <CardTitle className="text-white text-lg">{partner.name}</CardTitle>
                     {partner.isVerified && (
                       <div className="relative group">
-                        <CheckCircle className="h-5 w-5 text-blue-500" />
+                        <img 
+                          src={verifiedBadge} 
+                          alt="Verifiziert" 
+                          className="h-5 w-5"
+                        />
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                           Verifizierter Partner
                         </div>
