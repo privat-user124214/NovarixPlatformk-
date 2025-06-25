@@ -93,7 +93,7 @@ export default function Landing() {
             <CardHeader>
               <Users className="h-12 w-12 text-novarix-purple mb-4" />
               <CardTitle className="text-white">Persönlicher Support</CardTitle>
-              <CardDescription className="text-novarix-text">
+              <CardDescription className="text-[#3c445c]">
                 Direkter Kontakt zu unserem Entwicklerteam und kontinuierlicher Support
               </CardDescription>
             </CardHeader>
