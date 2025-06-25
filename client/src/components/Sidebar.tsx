@@ -96,14 +96,21 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               );
             })}
              {user && canAddTeamMembers(user.role) && (
-            
-              <Link href="/user-management">
-                <a className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-novarix-text hover:text-white hover:bg-novarix-tertiary group">
-                  <Users className="mr-3 h-5 w-5 text-novarix-muted group-hover:text-novarix-purple" />
-                  Team Management
+              <Link key="user-management" href="/users">
+                <a
+                  className={`
+                    group flex items-center px-2 py-2 text-sm font-medium rounded-md
+                    ${isActive("/users")
+                      ? 'bg-novarix-purple text-white'
+                      : 'text-[#3c445c] hover:text-white hover:bg-novarix-tertiary'
+                    }
+                  `}
+                  onClick={onClose}
+                >
+                  <Users className="mr-3 h-5 w-5" />
+                  User Management
                 </a>
               </Link>
-           
           )}
           </nav>
 
