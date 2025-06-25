@@ -75,11 +75,14 @@ export default function Partners() {
 
   if (!partners || partners.length === 0) {
     return (
-      <div className="text-center py-12">
-        <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
-        <p className="text-novarix-text">
-          Derzeit sind keine Partner verfügbar.
-        </p>
+      <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
+        {!isAuthenticated && <LandingHeader />}
+        <div className={`text-center py-12 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
+          <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
+          <p className="text-novarix-text">
+            Derzeit sind keine Partner verfügbar.
+          </p>
+        </div>
       </div>
     );
   }
@@ -109,7 +112,7 @@ export default function Partners() {
                     {partner.isVerified && (
                       <div className="relative group">
                         <img 
-                          src="/src/assets/verified-badge.svg" 
+                          src="@assets/screenshot-1750829433800.png" 
                           alt="Verifiziert"
                           className="h-5 w-5"
                         />

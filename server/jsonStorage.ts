@@ -49,11 +49,7 @@ export interface IStorage {
     completed: number;
   }>;
 
-  // IP Blacklist methods
-  isIPBlacklisted(ip: string): Promise<boolean>;
-  addIPToBlacklist(ip: string): Promise<void>;
-  removeIPFromBlacklist(ip: string): Promise<void>;
-  getBlacklistedIPs(): Promise<string[]>;
+  // IP Blacklist methods removed per user request
 
   // Partner operations
   createPartner(partner: InsertPartner): Promise<Partner>;
