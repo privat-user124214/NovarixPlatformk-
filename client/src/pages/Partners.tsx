@@ -11,6 +11,7 @@ export default function Partners() {
   const { isAuthenticated } = useAuth();
   const { data: partners, isLoading, error } = useQuery<Partner[]>({
     queryKey: ["/api/partners"],
+    retry: false,
   });
 
   if (isLoading) {
@@ -111,11 +112,7 @@ export default function Partners() {
                     <CardTitle className="text-white text-lg">{partner.name}</CardTitle>
                     {partner.isVerified && (
                       <div className="relative group">
-                        <img 
-                          src="@assets/screenshot-1750829433800.png" 
-                          alt="Verifiziert"
-                          className="h-5 w-5"
-                        />
+                        <CheckCircle className="h-5 w-5 text-blue-500" />
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                           Verifizierter Partner
                         </div>
