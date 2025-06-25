@@ -32,19 +32,6 @@ app.use(
   })
 );
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "supergeheim", // ⚠️ später in .env
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: false, // lokal false, auf Render dann true
-      sameSite: "lax",
-    },
-  })
-);
-
 
 // 📝 Logging für API-Routen
 app.use((req, res, next) => {
