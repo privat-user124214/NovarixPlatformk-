@@ -68,5 +68,19 @@
   ],
   "nextUserId": 5,
   "nextOrderId": 3,
-  "blacklistedIPs": []
+  "blacklistedIPs": [],
+  "partners": [
+    {
+      "id": 1,
+      "name": "Novarix Desing",
+      "description": "Novarix Design – Ihre erste Adresse, wenn Sie einen professionellen Discord-Server erstellen möchten.",
+      "website": "https://discord.gg/7FjntbXmbj",
+      "logo": "https://probot.media/hNhBdXeIDt.png",
+      "contactEmail": "kontakt@novarix-studio.de",
+      "isActive": true,
+      "createdAt": "2025-06-25T04:49:36.732Z",
+      "updatedAt": "2025-06-25T04:49:36.732Z"
+    }
+  ],
+  "nextPartnerId": 2
 }

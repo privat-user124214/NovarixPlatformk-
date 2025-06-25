@@ -148,12 +148,20 @@ export default function Dashboard() {
                              user?.role === "dev" ? "Developer" :
                              user?.role === "member" ? "Member" : "User"}!
                 </h3>
-                <p className="text-novarix-text">
+                <p className="text-novarix-text mb-4">
                   {isTeamMember(user?.role || "") 
-                    ? "Sie haben Zugriff auf alle Aufträge und Verwaltungsfunktionen."
+                    ? "Dies ist Ihr persönlicher Dashboard. Wechseln Sie zum Team Dashboard für Verwaltungsfunktionen."
                     : "Sie können Bot-Aufträge erstellen und verwalten."
                   }
                 </p>
+                {isTeamMember(user?.role || "") && (
+                  <Button asChild className="bg-novarix-accent hover:bg-novarix-accent/90">
+                    <Link href="/team-dashboard">
+                      <ClipboardList className="h-4 w-4 mr-2" />
+                      Zum Team Dashboard
+                    </Link>
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>

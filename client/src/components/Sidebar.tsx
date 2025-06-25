@@ -28,15 +28,16 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   const navigation = [
     { name: "Dashboard", href: "/", icon: Home },
+    ...(user && isTeamMember(user.role) 
+      ? [{ name: "Team Dashboard", href: "/team-dashboard", icon: Users }] 
+      : []
+    ),
     { name: "Aufträge verwalten", href: "/orders", icon: ClipboardList },
     ...(user && user.role === "customer" 
       ? [{ name: "Neuer Auftrag", href: "/new-order", icon: Plus }] 
       : []
     ),
-    ...(user && isTeamMember(user.role) 
-      ? [{ name: "Team Dashboard", href: "/team-dashboard", icon: Users }] 
-      : []
-    ),
+    { name: "Partner", href: "/partners", icon: Handshake },
     { name: "Rechtliches", href: "/legal", icon: Shield },
     { name: "Impressum", href: "/impressum", icon: FileText },
   ];

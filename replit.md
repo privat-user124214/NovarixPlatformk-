@@ -112,6 +112,11 @@ The application uses JSON file storage with three main entities:
   - Owner-only Partner Management page for CRUD operations
   - Partner schema with name, description, website, logo, contact info
   - Role-based access control for partner management
+- June 25, 2025. Enhanced Team Member Experience:
+  - Team members now see both personal and team dashboards
+  - Added landing page header with navigation to legal pages
+  - Improved dashboard navigation for team members
+  - Clear separation between personal and team management views
 
 # User Preferences
 
