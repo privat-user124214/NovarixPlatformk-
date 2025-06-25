@@ -22,9 +22,10 @@ The system is built as a monorepo with a React frontend and Express backend, usi
 - **API Design**: RESTful endpoints with role-based middleware protection
 
 ## Database Schema
-The application uses PostgreSQL with two main entities:
+The application uses JSON file storage with three main entities:
 - **Users**: Stores customer and team member information with role-based access (customer, dev, admin, owner)
 - **Orders**: Tracks bot development requests with status management and user relationships
+- **Partners**: Manages business partnerships with contact information and active status
 
 # Key Components
 
@@ -51,6 +52,12 @@ The application uses PostgreSQL with two main entities:
 - User role management and permission system
 - Team member notes and activity tracking
 - Hierarchical permissions (owner > admin > dev > customer)
+
+## Partner Management
+- Public Partners page displays active partnerships
+- Owner-only management interface for partner CRUD operations
+- Partner information includes name, description, website, logo, contact details
+- Active/inactive status control for partnership visibility
 
 # Data Flow
 
@@ -100,6 +107,11 @@ The application uses PostgreSQL with two main entities:
 - June 25, 2025. Migrated from PostgreSQL database to JSON file storage system
 - June 25, 2025. Added Team Dashboard for team members (dev, admin, owner roles)
 - June 25, 2025. Enhanced navigation with role-based menu items
+- June 25, 2025. Added Partner Management System:
+  - Public Partners page showing active partnerships
+  - Owner-only Partner Management page for CRUD operations
+  - Partner schema with name, description, website, logo, contact info
+  - Role-based access control for partner management
 
 # User Preferences
 

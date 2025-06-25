@@ -29,6 +29,18 @@ export const orders = pgTable("orders", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+export const partners = pgTable("partners", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(),
+  description: text("description"),
+  website: text("website"),
+  logo: text("logo"),
+  contactEmail: varchar("contact_email", { length: 255 }),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 export const ordersRelations = relations(orders, ({ one }) => ({
   user: one(users, {
     fields: [orders.userId],
@@ -75,6 +87,26 @@ export const addTeamMemberSchema = z.object({
   notes: z.string().optional(),
 });
 
+export const insertPartnerSchema = createInsertSchema(partners).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  name: z.string().min(1, "Name is required"),
+  description: z.string().optional(),
+  website: z.string().url("Invalid website URL").optional().or(z.literal("")),
+  contactEmail: z.string().email("Invalid email address").optional().or(z.literal("")),
+});
+
+export const updatePartnerSchema = z.object({
+  name: z.string().min(1, "Name is required").optional(),
+  description: z.string().optional(),
+  website: z.string().url("Invalid website URL").optional().or(z.literal("")),
+  logo: z.string().optional(),
+  contactEmail: z.string().email("Invalid email address").optional().or(z.literal("")),
+  isActive: z.boolean().optional(),
+});
+
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -84,3 +116,6 @@ export type OrderWithUser = Order & { user: User };
 export type LoginData = z.infer<typeof loginSchema>;
 export type UpdateOrderStatus = z.infer<typeof updateOrderStatusSchema>;
 export type AddTeamMember = z.infer<typeof addTeamMemberSchema>;
+export type Partner = typeof partners.$inferSelect;
+export type InsertPartner = z.infer<typeof insertPartnerSchema>;
+export type UpdatePartner = z.infer<typeof updatePartnerSchema>;

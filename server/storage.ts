@@ -1,13 +1,17 @@
 import { 
   users, 
   orders,
+  partners,
   type User, 
   type InsertUser, 
   type Order,
   type InsertOrder,
   type OrderWithUser,
   type UpdateOrderStatus,
-  type AddTeamMember
+  type AddTeamMember,
+  type Partner,
+  type InsertPartner,
+  type UpdatePartner
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, gte, lt, desc } from "drizzle-orm";
@@ -35,6 +39,14 @@ export interface IStorage {
     active: number;
     completed: number;
   }>;
+
+  // Partner operations
+  createPartner(partner: InsertPartner): Promise<Partner>;
+  getAllPartners(): Promise<Partner[]>;
+  getActivePartners(): Promise<Partner[]>;
+  getPartner(id: number): Promise<Partner | undefined>;
+  updatePartner(id: number, update: UpdatePartner): Promise<void>;
+  deletePartner(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -180,6 +192,40 @@ export class DatabaseStorage implements IStorage {
       active: activeOrders.length,
       completed: completedOrders.length,
     };
+  }
+
+  // Partner operations
+  async createPartner(insertPartner: InsertPartner): Promise<Partner> {
+    const [partner] = await db.insert(partners).values({
+      ...insertPartner,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }).returning();
+    return partner;
+  }
+
+  async getAllPartners(): Promise<Partner[]> {
+    return await db.select().from(partners).orderBy(desc(partners.createdAt));
+  }
+
+  async getActivePartners(): Promise<Partner[]> {
+    return await db.select().from(partners).where(eq(partners.isActive, true)).orderBy(desc(partners.createdAt));
+  }
+
+  async getPartner(id: number): Promise<Partner | undefined> {
+    const [partner] = await db.select().from(partners).where(eq(partners.id, id));
+    return partner || undefined;
+  }
+
+  async updatePartner(id: number, update: UpdatePartner): Promise<void> {
+    await db
+      .update(partners)
+      .set({ ...update, updatedAt: new Date() })
+      .where(eq(partners.id, id));
+  }
+
+  async deletePartner(id: number): Promise<void> {
+    await db.delete(partners).where(eq(partners.id, id));
   }
 }
 

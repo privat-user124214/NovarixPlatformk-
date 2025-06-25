@@ -16,6 +16,8 @@ import Legal from "@/pages/Legal";
 import Impressum from "@/pages/Impressum";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import Partners from "@/pages/Partners";
+import PartnerManagement from "@/pages/PartnerManagement";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -46,6 +48,8 @@ function Router() {
         <Route path="/new-order" component={NewOrder} />
         <Route path="/team-dashboard" component={TeamDashboard} />
         <Route path="/users" component={UserManagement} />
+        <Route path="/partners" component={Partners} />
+        <Route path="/partner-management" component={PartnerManagement} />
         <Route path="/legal" component={Legal} />
         <Route path="/impressum" component={Impressum} />
         <Route component={NotFound} />

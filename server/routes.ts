@@ -8,7 +8,9 @@ import {
   loginSchema, 
   insertOrderSchema,
   updateOrderStatusSchema,
-  addTeamMemberSchema
+  addTeamMemberSchema,
+  insertPartnerSchema,
+  updatePartnerSchema
 } from "@shared/schema";
 import { storage } from "./jsonStorage";
 
@@ -454,6 +456,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.removeIPFromBlacklist(ip);
       res.json({ message: "IP removed from blacklist" });
     } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Partner routes
+  app.get("/api/partners", async (req, res) => {
+    try {
+      const partners = await storage.getActivePartners();
+      res.json(partners);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/partners", requireRole(["owner"]), async (req, res) => {
+    try {
+      const partners = await storage.getAllPartners();
+      res.json(partners);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/admin/partners", requireRole(["owner"]), async (req: any, res) => {
+    try {
+      const validation = insertPartnerSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({ 
+          message: "Validation error", 
+          errors: validation.error.errors 
+        });
+      }
+
+      const partner = await storage.createPartner(validation.data);
+      res.status(201).json(partner);
+    } catch (error) {
+      console.error("Create partner error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.patch("/api/admin/partners/:id", requireRole(["owner"]), async (req: any, res) => {
+    try {
+      const partnerId = parseInt(req.params.id);
+      if (isNaN(partnerId)) {
+        return res.status(400).json({ message: "Invalid partner ID" });
+      }
+
+      const validation = updatePartnerSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({ 
+          message: "Validation error", 
+          errors: validation.error.errors 
+        });
+      }
+
+      const existingPartner = await storage.getPartner(partnerId);
+      if (!existingPartner) {
+        return res.status(404).json({ message: "Partner not found" });
+      }
+
+      await storage.updatePartner(partnerId, validation.data);
+      res.json({ message: "Partner updated successfully" });
+    } catch (error) {
+      console.error("Update partner error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/admin/partners/:id", requireRole(["owner"]), async (req: any, res) => {
+    try {
+      const partnerId = parseInt(req.params.id);
+      if (isNaN(partnerId)) {
+        return res.status(400).json({ message: "Invalid partner ID" });
+      }
+
+      const existingPartner = await storage.getPartner(partnerId);
+      if (!existingPartner) {
+        return res.status(404).json({ message: "Partner not found" });
+      }
+
+      await storage.deletePartner(partnerId);
+      res.json({ message: "Partner deleted successfully" });
+    } catch (error) {
+      console.error("Delete partner error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });

@@ -6,14 +6,19 @@ import {
   type Order,
   type InsertOrder,
   type OrderWithUser,
-  type UpdateOrderStatus
+  type UpdateOrderStatus,
+  type Partner,
+  type InsertPartner,
+  type UpdatePartner
 } from "@shared/schema";
 
 interface JsonData {
   users: User[];
   orders: Order[];
+  partners: Partner[];
   nextUserId: number;
   nextOrderId: number;
+  nextPartnerId: number;
   blacklistedIPs: string[];
 }
 
@@ -49,6 +54,14 @@ export interface IStorage {
   addIPToBlacklist(ip: string): Promise<void>;
   removeIPFromBlacklist(ip: string): Promise<void>;
   getBlacklistedIPs(): Promise<string[]>;
+
+  // Partner operations
+  createPartner(partner: InsertPartner): Promise<Partner>;
+  getAllPartners(): Promise<Partner[]>;
+  getActivePartners(): Promise<Partner[]>;
+  getPartner(id: number): Promise<Partner | undefined>;
+  updatePartner(id: number, update: UpdatePartner): Promise<void>;
+  deletePartner(id: number): Promise<void>;
 }
 
 export class JsonStorage implements IStorage {
@@ -64,6 +77,12 @@ export class JsonStorage implements IStorage {
       const jsonData = JSON.parse(data);
       if (!jsonData.blacklistedIPs) {
         jsonData.blacklistedIPs = [];
+      }
+      if (!jsonData.partners) {
+        jsonData.partners = [];
+      }
+      if (!jsonData.nextPartnerId) {
+        jsonData.nextPartnerId = 1;
       }
       return jsonData;
     } catch (error) {
@@ -83,8 +102,10 @@ export class JsonStorage implements IStorage {
           }
         ],
         orders: [],
+        partners: [],
         nextUserId: 2,
         nextOrderId: 1,
+        nextPartnerId: 1,
         blacklistedIPs: []
       };
       await this.saveData(initialData);
@@ -291,6 +312,62 @@ export class JsonStorage implements IStorage {
   async getBlacklistedIPs(): Promise<string[]> {
     const data = await this.loadData();
     return data.blacklistedIPs || [];
+  }
+
+  // Partner operations
+  async createPartner(insertPartner: InsertPartner): Promise<Partner> {
+    const data = await this.loadData();
+    const newPartner: Partner = {
+      id: data.nextPartnerId,
+      name: insertPartner.name,
+      description: insertPartner.description || null,
+      website: insertPartner.website || null,
+      logo: insertPartner.logo || null,
+      contactEmail: insertPartner.contactEmail || null,
+      isActive: insertPartner.isActive ?? true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    data.partners.push(newPartner);
+    data.nextPartnerId++;
+    await this.saveData(data);
+    return newPartner;
+  }
+
+  async getAllPartners(): Promise<Partner[]> {
+    const data = await this.loadData();
+    return data.partners || [];
+  }
+
+  async getActivePartners(): Promise<Partner[]> {
+    const data = await this.loadData();
+    return (data.partners || []).filter(partner => partner.isActive);
+  }
+
+  async getPartner(id: number): Promise<Partner | undefined> {
+    const data = await this.loadData();
+    return data.partners.find(partner => partner.id === id);
+  }
+
+  async updatePartner(id: number, update: UpdatePartner): Promise<void> {
+    const data = await this.loadData();
+    const partnerIndex = data.partners.findIndex(partner => partner.id === id);
+    if (partnerIndex === -1) return;
+
+    const partner = data.partners[partnerIndex];
+    data.partners[partnerIndex] = {
+      ...partner,
+      ...update,
+      updatedAt: new Date(),
+    };
+    await this.saveData(data);
+  }
+
+  async deletePartner(id: number): Promise<void> {
+    const data = await this.loadData();
+    data.partners = data.partners.filter(partner => partner.id !== id);
+    await this.saveData(data);
   }
 }
 

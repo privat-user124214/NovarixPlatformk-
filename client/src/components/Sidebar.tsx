@@ -10,7 +10,8 @@ import {
   Shield,
   FileText,
   X,
-  UserCog
+  UserCog,
+  Handshake
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -109,6 +110,23 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 >
                   <Users className="mr-3 h-5 w-5" />
                   User Management
+                </a>
+              </Link>
+          )}
+          {user && user.role === "owner" && (
+              <Link key="partner-management" href="/partner-management">
+                <a
+                  className={`
+                    group flex items-center px-2 py-2 text-sm font-medium rounded-md
+                    ${isActive("/partner-management")
+                      ? 'bg-novarix-purple text-white'
+                      : 'text-[#3c445c] hover:text-white hover:bg-novarix-tertiary'
+                    }
+                  `}
+                  onClick={onClose}
+                >
+                  <Handshake className="mr-3 h-5 w-5" />
+                  Partner-Verwaltung
                 </a>
               </Link>
           )}
