@@ -10,9 +10,18 @@
       "createdAt": "2025-06-25T02:39:39.057Z",
       "updatedAt": "2025-06-25T02:39:39.057Z",
       "notes": "System Owner"
+    },
+    {
+      "email": "lenny.winkler.dc@gmail.com",
+      "password": "$2b$10$Q9NHa1nNvSuRKRncG8pO6uXZzEqrAQkbTFmQvGh1ZVNOw6bwtdLwW",
+      "firstName": "Lenny",
+      "lastName": "Winkler",
+      "id": 2,
+      "createdAt": "2025-06-25T02:54:42.307Z",
+      "updatedAt": "2025-06-25T02:54:42.307Z"
     }
   ],
   "orders": [],
-  "nextUserId": 2,
+  "nextUserId": 3,
   "nextOrderId": 1
 }

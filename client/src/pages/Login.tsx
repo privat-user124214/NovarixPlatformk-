@@ -18,10 +18,29 @@ export default function Login() {
 
   const loginMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      console.log('Attempting login with:', data.email);
-      const result = await apiRequest("POST", "/api/auth/login", data);
-      console.log('Login result:', result);
-      return result;
+      try {
+        console.log('Attempting login with:', data.email);
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.text();
+          throw new Error(`${response.status}: ${errorData}`);
+        }
+
+        const result = await response.json();
+        console.log('Login result:', result);
+        return result;
+      } catch (error) {
+        console.error('Login fetch error:', error);
+        throw error;
+      }
     },
     onSuccess: (data) => {
       console.log('Login successful:', data);
@@ -37,7 +56,7 @@ export default function Login() {
       console.error('Login error:', error);
       toast({
         title: "Anmeldung fehlgeschlagen",
-        description: error.message,
+        description: error.message.includes("Invalid credentials") ? "Ungültige Anmeldedaten" : error.message,
         variant: "destructive",
       });
     },
@@ -60,7 +79,7 @@ export default function Login() {
       <Card className="w-full max-w-md bg-novarix-secondary border-novarix">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold text-white">Novarix Studio</CardTitle>
-          <CardDescription className="text-novarix-muted">
+          <CardDescription className="text-[#3c445c]">
             Anmelden um fortzufahren
           </CardDescription>
         </CardHeader>
@@ -68,7 +87,7 @@ export default function Login() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="email" className="text-novarix-text">E-Mail</Label>
+              <Label htmlFor="email" className="text-[#3c445c]">E-Mail</Label>
               <Input
                 id="email"
                 name="email"
@@ -82,7 +101,7 @@ export default function Login() {
             </div>
             
             <div>
-              <Label htmlFor="password" className="text-novarix-text">Passwort</Label>
+              <Label htmlFor="password" className="text-[#3c445c]">Passwort</Label>
               <Input
                 id="password"
                 name="password"
