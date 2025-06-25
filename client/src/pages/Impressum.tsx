@@ -62,6 +62,9 @@ export default function Impressum() {
                     Discord Server
                   </a>
                 </p>
+                <p className="text-orange-400 font-medium mt-3">
+                  ⚠️ Hinweis: Briefpost wird nur entgegengenommen, wenn diese an "Timo Weber" adressiert ist.
+                </p>
               </div>
               
               <div>
