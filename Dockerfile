@@ -1,25 +1,20 @@
-# Use Node.js LTS version
+# Basis-Image
 FROM node:20-alpine
 
-# Set working directory
+# Arbeitsverzeichnis
 WORKDIR /app
 
-# Copy package files
+# Nur package.json und package-lock.json kopieren, um Caching zu ermöglichen
 COPY package*.json ./
 
-# Install dependencies
+# Abhängigkeiten installieren
 RUN npm install
 
-
-
-# Copy source code
+# Den gesamten Projektinhalt kopieren
 COPY . .
 
-# Build the application
+# Build ausführen: baut sowohl den Frontend-Teil (via Vite) als auch den Backend-Teil (via esbuild)
 RUN npm run build
 
-# Expose port
-EXPOSE 5000
-
-# Start the application
-CMD ["npm", "start"]
+# App starten (falls du eine Production-Start-Anweisung brauchst, z.B.)
+CMD ["node", "dist/index.js"]
