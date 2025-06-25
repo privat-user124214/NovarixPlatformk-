@@ -3,9 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Mail, Globe } from "lucide-react";
+import { LandingHeader } from "@/components/LandingHeader";
+import { useAuth } from "@/hooks/useAuth";
 import type { Partner } from "@shared/schema";
 
 export default function Partners() {
+  const { isAuthenticated } = useAuth();
   const { data: partners, isLoading, error } = useQuery<Partner[]>({
     queryKey: ["/api/partners"],
   });
@@ -55,7 +58,9 @@ export default function Partners() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
+      {!isAuthenticated && <LandingHeader />}
+      <div className={`space-y-8 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
       {/* Header */}
       <div className="text-center">
         <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
@@ -154,6 +159,7 @@ export default function Partners() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

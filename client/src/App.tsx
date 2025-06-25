@@ -18,6 +18,8 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Partners from "@/pages/Partners";
 import PartnerManagement from "@/pages/PartnerManagement";
+import Terms from "@/pages/Terms";
+import Privacy from "@/pages/Privacy";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -35,6 +37,11 @@ function Router() {
       <Switch>
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
+        <Route path="/partners" component={Partners} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/legal" component={Legal} />
+        <Route path="/impressum" component={Impressum} />
         <Route component={Landing} />
       </Switch>
     );
@@ -50,6 +57,8 @@ function Router() {
         <Route path="/users" component={UserManagement} />
         <Route path="/partners" component={Partners} />
         <Route path="/partner-management" component={PartnerManagement} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/privacy" component={Privacy} />
         <Route path="/legal" component={Legal} />
         <Route path="/impressum" component={Impressum} />
         <Route component={NotFound} />

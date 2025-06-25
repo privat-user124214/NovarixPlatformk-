@@ -117,6 +117,11 @@ The application uses JSON file storage with three main entities:
   - Added landing page header with navigation to legal pages
   - Improved dashboard navigation for team members
   - Clear separation between personal and team management views
+- June 25, 2025. Public Access to Legal Pages:
+  - Partners, AGB, Datenschutz, and Impressum accessible without login
+  - Created dedicated Terms and Privacy pages with detailed content
+  - Updated navigation bar with all legal links
+  - Improved user experience for non-authenticated visitors
 
 # User Preferences
 

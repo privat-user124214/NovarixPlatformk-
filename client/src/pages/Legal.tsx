@@ -1,9 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LandingHeader } from "@/components/LandingHeader";
+import { useAuth } from "@/hooks/useAuth";
 import { Shield, FileText } from "lucide-react";
 
 export default function Legal() {
+  const { isAuthenticated } = useAuth();
+
   return (
-    <div className="p-6">
+    <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
+      {!isAuthenticated && <LandingHeader />}
+      <div className={`p-6 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
       <h2 className="text-2xl font-bold text-white mb-6">Rechtliche Informationen</h2>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -200,6 +206,7 @@ export default function Legal() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

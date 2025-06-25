@@ -1,31 +1,13 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { LandingHeader } from "@/components/LandingHeader";
 import { Info, Bot, Shield, Users } from "lucide-react";
 
 export default function Landing() {
   return (
     <div className="min-h-screen bg-novarix">
-      {/* Header */}
-      <header className="bg-novarix-secondary border-b border-novarix">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <h1 className="text-2xl font-bold text-white">Novarix Studio</h1>
-            <div className="space-x-4">
-              <Link href="/login">
-                <Button variant="ghost" className="text-[#3c445c] hover:text-white">
-                  Anmelden
-                </Button>
-              </Link>
-              <Link href="/register">
-                <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">
-                  Registrieren
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <LandingHeader />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

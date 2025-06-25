@@ -24,10 +24,16 @@ export function LandingHeader() {
                 Partner
               </div>
             </Link>
-            <Link href="/legal">
+            <Link href="/terms">
+              <div className="flex items-center text-novarix-muted hover:text-white transition-colors cursor-pointer">
+                <FileText className="h-4 w-4 mr-2" />
+                AGB
+              </div>
+            </Link>
+            <Link href="/privacy">
               <div className="flex items-center text-novarix-muted hover:text-white transition-colors cursor-pointer">
                 <Shield className="h-4 w-4 mr-2" />
-                Rechtliches
+                Datenschutz
               </div>
             </Link>
             <Link href="/impressum">
