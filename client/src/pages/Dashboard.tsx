@@ -169,10 +169,9 @@ export default function Dashboard() {
           <Link href="/new-order">
             <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">
               <Plus className="mr-2 h-4 w-4" />
-                Neuer Auftrag
-              </Button>
-            </Link>
-          )}
+              Neuer Auftrag
+            </Button>
+          </Link>
         </div>
         
         <Card className="bg-novarix-secondary border-novarix">
@@ -233,10 +232,9 @@ export default function Dashboard() {
               <Link href="/new-order">
                 <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">
                   <Plus className="mr-2 h-4 w-4" />
-                    Ersten Auftrag erstellen
-                  </Button>
-                </Link>
-              )}
+                  Ersten Auftrag erstellen
+                </Button>
+              </Link>
             </CardContent>
           )}
         </Card>
