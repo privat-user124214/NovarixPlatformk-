@@ -31,9 +31,9 @@ export function isTeamMember(role: string): boolean {
 }
 
 export const canCreateOrders = (role: string) => {
-  return ["customer", "dev", "admin", "owner"].includes(role);
+  return ["customer", "member", "dev", "admin", "owner"].includes(role);
 };
 
 export const canCreateBots = (role: string) => {
-  return ["customer", "dev", "admin", "owner"].includes(role);
+  return ["customer", "member", "dev", "admin", "owner"].includes(role);
 };

@@ -143,10 +143,16 @@ export default function Dashboard() {
             <CardContent className="p-6">
               <div className="text-center">
                 <h3 className="text-lg font-medium text-white mb-2">
-                  Willkommen {user?.role === "owner" ? "Owner" : user?.role === "admin" ? "Admin" : "Developer"}!
+                  Willkommen {user?.role === "owner" ? "Owner" : 
+                             user?.role === "admin" ? "Admin" : 
+                             user?.role === "dev" ? "Developer" :
+                             user?.role === "member" ? "Member" : "User"}!
                 </h3>
                 <p className="text-novarix-text">
-                  Sie haben Zugriff auf alle Aufträge und Verwaltungsfunktionen.
+                  {isTeamMember(user?.role || "") 
+                    ? "Sie haben Zugriff auf alle Aufträge und Verwaltungsfunktionen."
+                    : "Sie können Bot-Aufträge erstellen und verwalten."
+                  }
                 </p>
               </div>
             </CardContent>
@@ -160,7 +166,7 @@ export default function Dashboard() {
           <h3 className="text-xl font-semibold text-white">
             {user?.role === "customer" ? "Ihre Aufträge" : "Aktuelle Aufträge"}
           </h3>
-          {user?.role === "customer" && (
+          {(user?.role === "customer" || user?.role === "member") && (
             <Link href="/new-order">
               <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">
                 <Plus className="mr-2 h-4 w-4" />
@@ -225,7 +231,7 @@ export default function Dashboard() {
               <p className="text-novarix-text mb-4">
                 Erstellen Sie Ihren ersten Bot-Auftrag und lassen Sie uns Ihre Idee umsetzen.
               </p>
-              {user?.role === "customer" && (
+              {(user?.role === "customer" || user?.role === "member") && (
                 <Link href="/new-order">
                   <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">
                     <Plus className="mr-2 h-4 w-4" />
