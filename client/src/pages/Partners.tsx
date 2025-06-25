@@ -15,23 +15,47 @@ export default function Partners() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
-          <p className="text-novarix-text">
-            Wir arbeiten mit zuverlässigen Partnern zusammen, um Ihnen die besten Services zu bieten.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(6)].map((_, i) => (
-            <Card key={i} className="bg-novarix-secondary border-novarix animate-pulse">
-              <CardContent className="p-6">
-                <div className="h-6 bg-novarix-tertiary rounded mb-4"></div>
-                <div className="h-4 bg-novarix-tertiary rounded mb-2"></div>
-                <div className="h-4 bg-novarix-tertiary rounded w-3/4"></div>
-              </CardContent>
-            </Card>
-          ))}
+      <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
+        {!isAuthenticated && <LandingHeader />}
+        <div className={`space-y-8 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
+            <p className="text-novarix-text">
+              Wir arbeiten mit zuverlässigen Partnern zusammen, um Ihnen die besten Services zu bieten.
+            </p>
+          </div>
+          
+          {/* Enhanced Loading Animation */}
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-novarix-accent border-t-transparent rounded-full animate-spin"></div>
+              <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-novarix-accent/40 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+            </div>
+            <p className="text-novarix-text mt-4 animate-pulse">Partner werden geladen...</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <Card key={i} className="bg-novarix-secondary border-novarix">
+                <CardContent className="p-6">
+                  <div className="animate-pulse space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="h-6 bg-novarix-tertiary rounded w-32"></div>
+                      <div className="h-8 w-8 bg-novarix-tertiary rounded"></div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-4 bg-novarix-tertiary rounded"></div>
+                      <div className="h-4 bg-novarix-tertiary rounded w-3/4"></div>
+                    </div>
+                    <div className="flex gap-2">
+                      <div className="h-8 bg-novarix-tertiary rounded w-20"></div>
+                      <div className="h-8 bg-novarix-tertiary rounded w-20"></div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -81,7 +105,11 @@ export default function Partners() {
                     <CardTitle className="text-white text-lg">{partner.name}</CardTitle>
                     {partner.isVerified && (
                       <div className="relative group">
-                        <CheckCircle className="h-5 w-5 text-blue-500 fill-current" />
+                        <img 
+                          src="/src/assets/verified-badge.svg" 
+                          alt="Verifiziert"
+                          className="h-5 w-5"
+                        />
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                           Verifizierter Partner
                         </div>

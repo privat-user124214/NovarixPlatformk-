@@ -48,8 +48,9 @@ export default function Login() {
         title: "Erfolgreich angemeldet",
         description: "Willkommen zurück!",
       });
+      // Redirect to dashboard after successful login
       setTimeout(() => {
-        window.location.reload();
+        window.location.href = "/dashboard";
       }, 100);
     },
     onError: (error: Error) => {

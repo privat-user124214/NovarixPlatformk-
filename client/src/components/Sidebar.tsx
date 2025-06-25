@@ -25,6 +25,8 @@ interface SidebarProps {
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const [location] = useLocation();
   const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const navigation = [
     { name: "Dashboard", href: "/", icon: Home },
@@ -169,6 +171,32 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 </div>
               </div>
             </div>
+          </div>
+          
+          {/* Logout Button */}
+          <div className="px-2 mt-4">
+            <button
+              onClick={async () => {
+                try {
+                  await apiRequest("POST", "/api/auth/logout");
+                  queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
+                  toast({
+                    title: "Erfolgreich abgemeldet",
+                    description: "Auf Wiedersehen!",
+                  });
+                  // Redirect to main website after logout
+                  window.location.href = "/";
+                } catch (error) {
+                  console.error("Logout error:", error);
+                  // Still redirect even if logout fails
+                  window.location.href = "/";
+                }
+              }}
+              className="w-full flex items-center px-2 py-2 text-sm font-medium rounded-md text-[#3c445c] hover:text-white hover:bg-novarix-tertiary"
+            >
+              <LogOut className="mr-3 h-5 w-5" />
+              Abmelden
+            </button>
           </div>
         </div>
       </div>

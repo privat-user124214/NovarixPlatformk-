@@ -272,17 +272,40 @@ export class JsonStorage implements IStorage {
     completed: number;
   }> {
     const data = await this.loadData();
-    const userOrders = data.orders.filter(order => order.userId === userId);
+    const user = data.users.find(u => u.id === userId);
+    
+    if (!user) {
+      return { thisMonth: 0, active: 0, completed: 0 };
+    }
 
-    const thisMonth = await this.getUserOrdersThisMonth(userId);
-    const active = userOrders.filter(order => order.status === "in_progress").length;
-    const completed = userOrders.filter(order => order.status === "completed").length;
-
-    return {
-      thisMonth,
-      active,
-      completed,
-    };
+    // For team members (dev, admin, owner), count orders they've worked on
+    // For customers, count their own orders
+    let userOrders: Order[];
+    
+    if (user.role === 'customer') {
+      userOrders = data.orders.filter(order => order.userId === userId);
+    } else {
+      // For team members, we'll count all orders for now
+      // In a real system, you'd track which team member worked on which order
+      userOrders = data.orders;
+    }
+    
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    
+    const thisMonth = userOrders.filter(order => 
+      new Date(order.createdAt) >= startOfMonth
+    ).length;
+    
+    const active = userOrders.filter(order => 
+      order.status === 'pending' || order.status === 'in_progress'
+    ).length;
+    
+    const completed = userOrders.filter(order => 
+      order.status === 'completed'
+    ).length;
+    
+    return { thisMonth, active, completed };
   }
 
   async isIPBlacklisted(ip: string): Promise<boolean> {

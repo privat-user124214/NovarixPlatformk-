@@ -411,7 +411,7 @@ export default function PartnerManagement() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {partner.description && (
-                  <p className="text-novarix-text text-sm leading-relaxed line-clamp-3">
+                  <p className="text-gray-300 text-sm leading-relaxed line-clamp-3">
                     {partner.description}
                   </p>
                 )}

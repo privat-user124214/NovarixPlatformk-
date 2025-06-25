@@ -79,7 +79,8 @@
       "contactEmail": "kontakt@novarix-studio.de",
       "isActive": true,
       "createdAt": "2025-06-25T04:49:36.732Z",
-      "updatedAt": "2025-06-25T04:49:36.732Z"
+      "updatedAt": "2025-06-25T05:04:05.392Z",
+      "isVerified": true
     }
   ],
   "nextPartnerId": 2

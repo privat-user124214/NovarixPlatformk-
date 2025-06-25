@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, ClipboardList, CheckCircle, Clock, Bot } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Users, ClipboardList, CheckCircle, Clock, Bot, AlertTriangle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { isTeamMember } from "@/lib/authUtils";
 
@@ -18,12 +19,23 @@ interface Order {
   };
 }
 
+interface UserStats {
+  thisMonth: number;
+  active: number;
+  completed: number;
+}
+
 export default function TeamDashboard() {
   const { user } = useAuth();
   
   const { data: orders = [] } = useQuery<Order[]>({
     queryKey: ["/api/orders"],
     enabled: !!user && isTeamMember(user.role),
+  });
+
+  const { data: userStats, isLoading: statsLoading } = useQuery<UserStats>({
+    queryKey: ["/api/user/stats"],
+    enabled: !!user,
   });
 
   const getStatusColor = (status: string) => {
