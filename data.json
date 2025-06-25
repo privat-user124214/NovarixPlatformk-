@@ -3,7 +3,7 @@
     {
       "id": 1,
       "email": "lenny.winkler.de@gmail.com",
-      "password": "$2b$10$nSATq1FNJtibphtJSQh/K.nt5tKT244ZaCdw6OEGrVpWfduMbOII6",
+      "password": "$2y$10$Rhjmoo48csVimS/qRfZNgOPG9IobPWCFFzZM/jLo2l5hfE6ZQAW7y",
       "role": "owner",
       "firstName": "Lenny",
       "lastName": "Winkler",
@@ -12,48 +12,37 @@
       "notes": "System Owner"
     },
     {
-      "email": "lenny.winkler.dc@gmail.com",
-      "password": "$2b$10$Q9NHa1nNvSuRKRncG8pO6uXZzEqrAQkbTFmQvGh1ZVNOw6bwtdLwW",
-      "firstName": "Lenny",
-      "lastName": "Winkler",
-      "id": 2,
-      "role": "admin",
-      "createdAt": "2025-06-25T02:54:42.307Z",
-      "updatedAt": "2025-06-25T02:54:42.307Z"
-    },
-    {
       "email": "spenglerlenny03@gmail.com",
       "password": "$2b$10$Bya4sx59YYxXozSf5TfDTuDUmPeXUdH45PNPBpJACI4tVHIW33oxa",
       "firstName": "Lenny",
       "lastName": "Winkler",
-      "id": 3,
-      "role": "dev",
+      "id": 2,
+      "role": "member",
       "createdAt": "2025-06-25T02:58:05.622Z",
       "updatedAt": "2025-06-25T02:58:05.622Z"
-    },
-    {
-      "email": "kontakt@novarix-studio.de",
-      "password": "$2b$10$LXA9oPJJBTeNRaXlvKvEM.WpVdDd9AZYEQPODIbTPv0gx5gaxOWPW",
-      "firstName": "dw",
-      "lastName": "wd",
-      "id": 4,
-      "role": "customer",
-      "createdAt": "2025-06-25T02:58:48.572Z",
-      "updatedAt": "2025-06-25T02:58:48.572Z"
     },
     {
       "email": "ki@novarix-studio.de",
       "password": "$2b$10$Sc/xKQKxHLHqiEb/FeZJ0u59m8M6AllbvxaL8V4iGS/oPltqVSLmm",
       "firstName": "frew",
       "lastName": "rfedw",
-      "id": 5,
-      "role": "dev",
+      "id": 3,
+      "role": "member",
       "createdAt": "2025-06-25T03:08:12.836Z",
       "updatedAt": "2025-06-25T03:08:12.836Z"
+    },
+    {
+      "email": "lenny.winkler.dc@gmail.com",
+      "password": "$2b$10$WaqGF20qHupzbBd0gbPnAe1EjPfoAadmbB8gI0Z9V58G5ke7pT8HS",
+      "firstName": "Lenny",
+      "lastName": "Winkler",
+      "id": 4,
+      "createdAt": "2025-06-25T03:35:21.907Z",
+      "updatedAt": "2025-06-25T03:35:21.907Z"
     }
   ],
   "orders": [],
-  "nextUserId": 6,
+  "nextUserId": 5,
   "nextOrderId": 1,
   "blacklistedIPs": []
 }
