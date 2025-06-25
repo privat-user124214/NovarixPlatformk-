@@ -14,6 +14,7 @@ interface JsonData {
   orders: Order[];
   nextUserId: number;
   nextOrderId: number;
+  blacklistedIPs: string[];
 }
 
 export interface IStorage {
@@ -24,7 +25,7 @@ export interface IStorage {
   updateUserNotes(id: number, notes: string): Promise<void>;
   getTeamMembers(): Promise<User[]>;
   deleteUser(id: number): Promise<void>;
-  
+
   // Order operations
   createOrder(order: InsertOrder & { userId: number }): Promise<Order>;
   getOrdersByUser(userId: number): Promise<Order[]>;
@@ -32,13 +33,19 @@ export interface IStorage {
   getOrder(id: number): Promise<OrderWithUser | undefined>;
   updateOrderStatus(id: number, update: UpdateOrderStatus): Promise<void>;
   getUserOrdersThisMonth(userId: number): Promise<number>;
-  
+
   // Statistics
   getUserOrderStats(userId: number): Promise<{
     thisMonth: number;
     active: number;
     completed: number;
   }>;
+
+  // IP Blacklist methods
+  isIPBlacklisted(ip: string): Promise<boolean>;
+  addIPToBlacklist(ip: string): Promise<void>;
+  removeIPFromBlacklist(ip: string): Promise<void>;
+  getBlacklistedIPs(): Promise<string[]>;
 }
 
 export class JsonStorage implements IStorage {
@@ -51,7 +58,11 @@ export class JsonStorage implements IStorage {
   private async loadData(): Promise<JsonData> {
     try {
       const data = await fs.readFile(this.dataPath, "utf-8");
-      return JSON.parse(data);
+      const jsonData = JSON.parse(data);
+      if (!jsonData.blacklistedIPs) {
+        jsonData.blacklistedIPs = [];
+      }
+      return jsonData;
     } catch (error) {
       // If file doesn't exist, create initial data with owner user
       const initialData: JsonData = {
@@ -70,7 +81,8 @@ export class JsonStorage implements IStorage {
         ],
         orders: [],
         nextUserId: 2,
-        nextOrderId: 1
+        nextOrderId: 1,
+        blacklistedIPs: []
       };
       await this.saveData(initialData);
       return initialData;
@@ -99,11 +111,11 @@ export class JsonStorage implements IStorage {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    
+
     data.users.push(newUser);
     data.nextUserId++;
     await this.saveData(data);
-    
+
     return newUser;
   }
 
@@ -139,11 +151,11 @@ export class JsonStorage implements IStorage {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    
+
     data.orders.push(newOrder);
     data.nextOrderId++;
     await this.saveData(data);
-    
+
     return newOrder;
   }
 
@@ -171,7 +183,7 @@ export class JsonStorage implements IStorage {
     const data = await this.loadData();
     const order = data.orders.find(o => o.id === id);
     if (!order) return undefined;
-    
+
     const user = data.users.find(u => u.id === order.userId);
     return {
       ...order,
@@ -195,7 +207,7 @@ export class JsonStorage implements IStorage {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-    
+
     return data.orders.filter(order => {
       const orderDate = new Date(order.createdAt);
       return order.userId === userId && 
@@ -211,16 +223,45 @@ export class JsonStorage implements IStorage {
   }> {
     const data = await this.loadData();
     const userOrders = data.orders.filter(order => order.userId === userId);
-    
+
     const thisMonth = await this.getUserOrdersThisMonth(userId);
     const active = userOrders.filter(order => order.status === "in_progress").length;
     const completed = userOrders.filter(order => order.status === "completed").length;
-    
+
     return {
       thisMonth,
       active,
       completed,
     };
+  }
+
+  async isIPBlacklisted(ip: string): Promise<boolean> {
+    const data = await this.loadData();
+    return data.blacklistedIPs?.includes(ip) || false;
+  }
+
+  async addIPToBlacklist(ip: string): Promise<void> {
+    const data = await this.loadData();
+    if (!data.blacklistedIPs) {
+      data.blacklistedIPs = [];
+    }
+    if (!data.blacklistedIPs.includes(ip)) {
+      data.blacklistedIPs.push(ip);
+      await this.saveData(data);
+    }
+  }
+
+  async removeIPFromBlacklist(ip: string): Promise<void> {
+    const data = await this.loadData();
+    if (data.blacklistedIPs) {
+      data.blacklistedIPs = data.blacklistedIPs.filter(blockedIP => blockedIP !== ip);
+      await this.saveData(data);
+    }
+  }
+
+  async getBlacklistedIPs(): Promise<string[]> {
+    const data = await this.loadData();
+    return data.blacklistedIPs || [];
   }
 }
 

@@ -10,6 +10,7 @@ import {
   updateOrderStatusSchema,
   addTeamMemberSchema
 } from "@shared/schema";
+import { storage } from "./jsonStorage";
 
 // Extend session data type
 declare module "express-session" {
@@ -34,11 +35,51 @@ function getSession() {
   });
 }
 
+// IP checking middleware
+const checkIPBlacklist = async (req: any, res: any, next: any) => {
+  const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for']?.split(',')[0];
+  
+  // Check if IP is blacklisted
+  const isBlacklisted = await storage.isIPBlacklisted(clientIP);
+  if (isBlacklisted) {
+    return res.status(403).json({ message: "Access denied - IP blocked" });
+  }
+  
+  // Check for VPN (simple check - you could integrate with a VPN detection service)
+  const isVPN = await checkVPN(clientIP);
+  if (isVPN) {
+    return res.status(403).json({ message: "VPN/Proxy connections are not allowed" });
+  }
+  
+  next();
+};
+
+// Simple VPN detection function
+async function checkVPN(ip: string): Promise<boolean> {
+  try {
+    // Using a free VPN detection service
+    const response = await fetch(`https://vpnapi.io/api/${ip}?key=free`);
+    const data = await response.json();
+    return data.security?.vpn || data.security?.proxy || false;
+  } catch (error) {
+    // If service is down, allow access
+    console.log('VPN check failed:', error);
+    return false;
+  }
+}
+
 // Auth middleware
-const requireAuth = (req: any, res: any, next: any) => {
+const requireAuth = async (req: any, res: any, next: any) => {
   if (!req.session.userId) {
     return res.status(401).json({ message: "Unauthorized" });
   }
+  
+  const user = await storage.getUser(req.session.userId);
+  if (!user) {
+    return res.status(401).json({ message: "User not found" });
+  }
+  
+  req.user = user;
   next();
 };
 
@@ -74,6 +115,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Session middleware
   app.use(getSession());
+
+  // Apply IP checking to all routes
+  app.use(checkIPBlacklist);
 
   // Auth routes
   app.post("/api/auth/register", async (req, res) => {
@@ -169,13 +213,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/orders", requireAuth, async (req: any, res) => {
     try {
       const userId = req.session.userId;
+      const user = req.user;
       
-      // Check monthly limit
-      const orderCount = await storage.getUserOrdersThisMonth(userId);
-      if (orderCount >= 3) {
-        return res.status(429).json({ 
-          message: "Monthly order limit reached (3 orders per month)" 
-        });
+      // Only check monthly limit for customers, not team members
+      if (user.role === "customer") {
+        const orderCount = await storage.getUserOrdersThisMonth(userId);
+        if (orderCount >= 3) {
+          return res.status(429).json({ 
+            message: "Monthly order limit reached (3 orders per month)" 
+          });
+        }
       }
       
       const orderData = insertOrderSchema.parse(req.body);
@@ -327,6 +374,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       await storage.deleteUser(userId);
       res.json({ message: "User deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // IP Management routes
+  app.get("/api/admin/blacklisted-ips", requireRole(["admin", "owner"]), async (req: any, res) => {
+    try {
+      const ips = await storage.getBlacklistedIPs();
+      res.json(ips);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/admin/blacklist-ip", requireRole(["admin", "owner"]), async (req: any, res) => {
+    try {
+      const { ip } = req.body;
+      if (!ip) {
+        return res.status(400).json({ message: "IP address is required" });
+      }
+      
+      await storage.addIPToBlacklist(ip);
+      res.json({ message: "IP added to blacklist" });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/admin/blacklist-ip/:ip", requireRole(["admin", "owner"]), async (req: any, res) => {
+    try {
+      const ip = req.params.ip;
+      await storage.removeIPFromBlacklist(ip);
+      res.json({ message: "IP removed from blacklist" });
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
     }
