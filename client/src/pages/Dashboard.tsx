@@ -166,10 +166,9 @@ export default function Dashboard() {
           <h3 className="text-xl font-semibold text-white">
             {user?.role === "customer" ? "Ihre Aufträge" : "Aktuelle Aufträge"}
           </h3>
-          {(user?.role === "customer" || user?.role === "member") && (
-            <Link href="/new-order">
-              <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">
-                <Plus className="mr-2 h-4 w-4" />
+          <Link href="/new-order">
+            <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">
+              <Plus className="mr-2 h-4 w-4" />
                 Neuer Auftrag
               </Button>
             </Link>
@@ -231,10 +230,9 @@ export default function Dashboard() {
               <p className="text-novarix-text mb-4">
                 Erstellen Sie Ihren ersten Bot-Auftrag und lassen Sie uns Ihre Idee umsetzen.
               </p>
-              {(user?.role === "customer" || user?.role === "member") && (
-                <Link href="/new-order">
-                  <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">
-                    <Plus className="mr-2 h-4 w-4" />
+              <Link href="/new-order">
+                <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">
+                  <Plus className="mr-2 h-4 w-4" />
                     Ersten Auftrag erstellen
                   </Button>
                 </Link>
