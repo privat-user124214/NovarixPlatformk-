@@ -81,9 +81,12 @@
     "zod": "^3.24.2",
     "zod-validation-error": "^3.4.0",
     "cookie-parser": "^1.4.6"
+    "@prisma/client": "^5.10.2"
   },
+
   "devDependencies": {
     "@replit/vite-plugin-cartographer": "^0.2.7",
+    "prisma": "^5.10.2".
     "@replit/vite-plugin-runtime-error-modal": "^0.0.3",
     "@tailwindcss/typography": "^0.5.15",
     "@tailwindcss/vite": "^4.1.3",
