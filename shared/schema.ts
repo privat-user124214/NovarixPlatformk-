@@ -37,6 +37,7 @@ export const partners = pgTable("partners", {
   logo: text("logo"),
   contactEmail: varchar("contact_email", { length: 255 }),
   isActive: boolean("is_active").notNull().default(true),
+  isVerified: boolean("is_verified").notNull().default(false),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -105,6 +106,7 @@ export const updatePartnerSchema = z.object({
   logo: z.string().optional(),
   contactEmail: z.string().email("Invalid email address").optional().or(z.literal("")),
   isActive: z.boolean().optional(),
+  isVerified: z.boolean().optional(),
 });
 
 // Types

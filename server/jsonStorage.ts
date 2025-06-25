@@ -325,6 +325,7 @@ export class JsonStorage implements IStorage {
       logo: insertPartner.logo || null,
       contactEmail: insertPartner.contactEmail || null,
       isActive: insertPartner.isActive ?? true,
+      isVerified: insertPartner.isVerified ?? false,
       createdAt: new Date(),
       updatedAt: new Date(),
     };

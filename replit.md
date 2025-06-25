@@ -122,6 +122,11 @@ The application uses JSON file storage with three main entities:
   - Created dedicated Terms and Privacy pages with detailed content
   - Updated navigation bar with all legal links
   - Improved user experience for non-authenticated visitors
+- June 25, 2025. Enhanced Partner System:
+  - Added verified badge system for special partners (like TikTok blue checkmark)
+  - Improved text contrast for partner descriptions (now using gray-300)
+  - Enhanced loading animation with dual spinning circles and loading text
+  - Updated partner schema to include isVerified field
 
 # User Preferences
 

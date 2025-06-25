@@ -35,7 +35,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, Globe, Mail, Image } from "lucide-react";
+import { Plus, Pencil, Trash2, Globe, Mail, Image, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { insertPartnerSchema, updatePartnerSchema, type Partner, type InsertPartner, type UpdatePartner } from "@shared/schema";
@@ -121,6 +121,7 @@ export default function PartnerManagement() {
       logo: "",
       contactEmail: "",
       isActive: true,
+      isVerified: false,
     },
   });
 
@@ -133,6 +134,7 @@ export default function PartnerManagement() {
       logo: "",
       contactEmail: "",
       isActive: true,
+      isVerified: false,
     },
   });
 
@@ -168,6 +170,7 @@ export default function PartnerManagement() {
       logo: partner.logo || "",
       contactEmail: partner.contactEmail || "",
       isActive: partner.isActive,
+      isVerified: partner.isVerified || false,
     });
     setIsEditDialogOpen(true);
   };
@@ -321,6 +324,22 @@ export default function PartnerManagement() {
                   render={({ field }) => (
                     <FormItem className="flex items-center justify-between">
                       <FormLabel className="text-white">Aktiv</FormLabel>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={addForm.control}
+                  name="isVerified"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="text-white">Verifiziert</FormLabel>
                       <FormControl>
                         <Switch
                           checked={field.value}
@@ -561,6 +580,22 @@ export default function PartnerManagement() {
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
                     <FormLabel className="text-white">Aktiv</FormLabel>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={editForm.control}
+                name="isVerified"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="text-white">Verifiziert</FormLabel>
                     <FormControl>
                       <Switch
                         checked={field.value}
