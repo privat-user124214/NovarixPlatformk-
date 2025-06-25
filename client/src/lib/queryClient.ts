@@ -1,3 +1,4 @@
+// client/src/lib/queryClient.ts
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 async function throwIfResNotOk(res: Response) {
@@ -10,52 +11,52 @@ async function throwIfResNotOk(res: Response) {
 export async function apiRequest(
   method: string,
   url: string,
-  data?: unknown | undefined,
+  data?: unknown
 ): Promise<any> {
   const res = await fetch(url, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
     body: data ? JSON.stringify(data) : undefined,
-    credentials: "include",
+    credentials: "include", // ← Cookie wichtig
   });
 
   await throwIfResNotOk(res);
-  
-  // Return JSON for responses with content
+
   const contentType = res.headers.get("content-type");
-  if (contentType && contentType.includes("application/json")) {
+  if (contentType?.includes("application/json")) {
     return res.json();
   }
-  
+
   return res;
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
+
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
-  ({ on401: unauthorizedBehavior }) =>
+  ({ on401 }) =>
   async ({ queryKey }) => {
     const res = await fetch(queryKey[0] as string, {
       credentials: "include",
     });
 
-    if (unauthorizedBehavior === "returnNull" && res.status === 401) {
-      return null;
+    if (on401 === "returnNull" && res.status === 401) {
+      return null as T;
     }
 
     await throwIfResNotOk(res);
     return await res.json();
   };
 
+// Du kannst optional hier "returnNull" global setzen
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      queryFn: getQueryFn({ on401: "throw" }),
-      refetchInterval: false,
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
+      queryFn: getQueryFn({ on401: "throw" }), // ← oder "returnNull" global
       retry: false,
+      staleTime: Infinity,
+      refetchOnWindowFocus: false,
     },
     mutations: {
       retry: false,
