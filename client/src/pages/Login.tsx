@@ -76,17 +76,17 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-novarix flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-novarix flex items-center justify-center mobile-spacing py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md bg-novarix-secondary border-novarix">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-white">Novarix Studio</CardTitle>
-          <CardDescription className="text-[#3c445c]">
+        <CardHeader className="text-center p-4 sm:p-6">
+          <CardTitle className="text-xl sm:text-2xl font-bold text-white">Novarix Studio</CardTitle>
+          <CardDescription className="text-[#3c445c] text-sm sm:text-base">
             Anmelden um fortzufahren
           </CardDescription>
         </CardHeader>
         
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <CardContent className="p-4 sm:p-6">
+          <form onSubmit={handleSubmit} className="space-y-4 mobile-form">
             <div>
               <Label htmlFor="email" className="text-[#3c445c]">E-Mail</Label>
               <Input

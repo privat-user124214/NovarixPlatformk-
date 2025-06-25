@@ -23,8 +23,7 @@ A modern full-stack web application for managing Discord bot development orders 
 
 ### Backend
 - Express.js + TypeScript
-- Drizzle ORM
-- PostgreSQL database
+- JSON file storage
 - Session-based authentication
 - bcrypt password hashing
 
@@ -42,7 +41,6 @@ The application is fully responsive and optimized for mobile devices:
 1. Connect your GitHub repository to Render
 2. Use the included `render.yaml` configuration
 3. Set environment variables:
-   - `DATABASE_URL`
    - `SESSION_SECRET`
 
 ### Other Platforms
@@ -64,17 +62,14 @@ npm run build
 
 # Start production server
 npm start
-
-# Database operations
-npm run db:push
 ```
 
 ## 📦 Environment Variables
 
 ```env
-DATABASE_URL=your_postgresql_connection_string
 SESSION_SECRET=your_session_secret_key
 NODE_ENV=production
+PORT=5000
 ```
 
 ## 🏗️ Project Structure
@@ -88,9 +83,10 @@ NODE_ENV=production
 │   │   └── lib/            # Utilities
 ├── server/                 # Express backend
 │   ├── routes.ts           # API routes
-│   ├── storage.ts          # Database interface
+│   ├── jsonStorage.ts      # JSON file storage
 │   └── index.ts            # Server entry point
 ├── shared/                 # Shared types and schemas
+├── data/                   # JSON data files
 └── dist/                   # Build output
 ```
 
@@ -101,6 +97,7 @@ NODE_ENV=production
 - Role-based access control
 - CSRF protection
 - Secure session management
+- JSON file-based data persistence
 
 ## 📄 License
 

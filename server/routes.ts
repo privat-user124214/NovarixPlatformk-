@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./jsonStorage";
 import bcrypt from "bcrypt";
 import session from "express-session";
+import MemoryStore from "memorystore";
 import { 
   insertUserSchema, 
   loginSchema, 
@@ -24,14 +25,18 @@ declare module "express-session" {
 // Session configuration
 function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
+  const MemoryStoreSession = MemoryStore(session);
 
   return session({
     secret: process.env.SESSION_SECRET || "your-secret-key-change-in-production",
     resave: false,
     saveUninitialized: false,
+    store: new MemoryStoreSession({
+      checkPeriod: sessionTtl, // prune expired entries every 24h
+    }),
     cookie: {
       httpOnly: true,
-      secure: false, // Set to true in production with HTTPS
+      secure: process.env.NODE_ENV === "production", // Set to true in production with HTTPS
       maxAge: sessionTtl,
     },
   });

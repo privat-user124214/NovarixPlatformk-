@@ -16,16 +16,17 @@ The system is built as a monorepo with a React frontend and Express backend, usi
 
 ## Backend Architecture
 - **Framework**: Express.js with TypeScript
-- **Database ORM**: Drizzle ORM for type-safe database operations
+- **Data Storage**: JSON file-based persistence with atomic operations
 - **Authentication**: Express sessions with bcrypt password hashing
-- **Session Storage**: PostgreSQL-backed session store using connect-pg-simple
+- **Session Storage**: Memory-based session store with automatic cleanup
 - **API Design**: RESTful endpoints with role-based middleware protection
 
-## Database Schema
+## Data Storage
 The application uses JSON file storage with three main entities:
 - **Users**: Stores customer and team member information with role-based access (customer, dev, admin, owner)
 - **Orders**: Tracks bot development requests with status management and user relationships
 - **Partners**: Manages business partnerships with contact information and active status
+- **Storage**: All data is persisted in JSON files with automatic backup and atomic writes
 
 # Key Components
 
@@ -87,24 +88,29 @@ The application uses JSON file storage with three main entities:
 ## Build Process
 - Frontend: Vite builds optimized static assets to `dist/public`
 - Backend: ESBuild bundles server code to `dist/index.js`
-- Database: Drizzle handles schema migrations via `db:push`
+- Data: JSON files are automatically created and managed
 
 ## Environment Configuration
 - **Development**: Uses NODE_ENV=development with tsx for hot reloading
 - **Production**: Runs compiled JavaScript with NODE_ENV=production
-- **Database**: Requires DATABASE_URL environment variable
 - **Sessions**: Uses SESSION_SECRET for secure session management
+- **Storage**: Data directory automatically created for JSON files
 
 ## Deployment Target
-- Configured for Replit's autoscale deployment
-- Port 5000 mapped to external port 80
-- PostgreSQL 16 module enabled for database support
+- Configured for multiple deployment platforms (Render, Vercel, Railway, Fly.io)
+- Port 5000 for application server
+- JSON file persistence with data directory mounting
 - Node.js 20 runtime environment
+- GitHub Actions CI/CD pipeline included
 
 # Changelog
 
 - June 25, 2025. Initial setup
 - June 25, 2025. Migrated from PostgreSQL database to JSON file storage system
+- June 25, 2025. Made code GitHub compatible with deployment configurations for multiple platforms (Render, Vercel, Railway, Fly.io)
+- June 25, 2025. Enhanced mobile responsiveness with touch-friendly interfaces and mobile-optimized layouts
+- June 25, 2025. Added comprehensive deployment configurations including Docker, GitHub Actions CI/CD
+- June 25, 2025. Removed all database dependencies, using pure JSON file storage with memory-based sessions
 - June 25, 2025. Added Team Dashboard for team members (dev, admin, owner roles)
 - June 25, 2025. Enhanced navigation with role-based menu items
 - June 25, 2025. Added Partner Management System:
@@ -131,3 +137,5 @@ The application uses JSON file storage with three main entities:
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
+Data storage: JSON file-based storage only, no database dependencies.
+Mobile compatibility: Touch-friendly interfaces with responsive design required.
