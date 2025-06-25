@@ -80,7 +80,7 @@
     "ws": "^8.18.0",
     "zod": "^3.24.2",
     "zod-validation-error": "^3.4.0",
-    "cookie-parser": "^1.4.6"
+    "cookie-parser": "^1.4.6",
     "@prisma/client": "^5.10.2"
   },
 
