@@ -17,15 +17,24 @@ export default function Login() {
   });
 
   const loginMutation = useMutation({
-    mutationFn: (data: typeof formData) => apiRequest("POST", "/api/auth/login", data),
-    onSuccess: () => {
+    mutationFn: async (data: typeof formData) => {
+      console.log('Attempting login with:', data.email);
+      const result = await apiRequest("POST", "/api/auth/login", data);
+      console.log('Login result:', result);
+      return result;
+    },
+    onSuccess: (data) => {
+      console.log('Login successful:', data);
       toast({
         title: "Erfolgreich angemeldet",
         description: "Willkommen zurück!",
       });
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     },
     onError: (error: Error) => {
+      console.error('Login error:', error);
       toast({
         title: "Anmeldung fehlgeschlagen",
         description: error.message,
