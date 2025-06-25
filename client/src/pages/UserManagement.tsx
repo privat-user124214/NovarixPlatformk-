@@ -245,7 +245,7 @@ export default function UserManagement() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-white">Benutzerverwaltung</h2>
+        <h2 className="text-2xl font-bold text-white">Team Management</h2>
         <Dialog open={addMemberOpen} onOpenChange={setAddMemberOpen}>
           <DialogTrigger asChild>
             <Button className="bg-novarix-purple hover:bg-novarix-purple-dark">

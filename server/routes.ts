@@ -22,7 +22,7 @@ declare module "express-session" {
 // Session configuration
 function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  
+
   return session({
     secret: process.env.SESSION_SECRET || "your-secret-key-change-in-production",
     resave: false,
@@ -38,19 +38,19 @@ function getSession() {
 // IP checking middleware
 const checkIPBlacklist = async (req: any, res: any, next: any) => {
   const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for']?.split(',')[0];
-  
+
   // Check if IP is blacklisted
   const isBlacklisted = await storage.isIPBlacklisted(clientIP);
   if (isBlacklisted) {
     return res.status(403).json({ message: "Access denied - IP blocked" });
   }
-  
+
   // Check for VPN (simple check - you could integrate with a VPN detection service)
   const isVPN = await checkVPN(clientIP);
   if (isVPN) {
     return res.status(403).json({ message: "VPN/Proxy connections are not allowed" });
   }
-  
+
   next();
 };
 
@@ -73,18 +73,18 @@ const requireAuth = async (req: any, res: any, next: any) => {
   if (!req.session.userId) {
     return res.status(401).json({ message: "Unauthorized" });
   }
-  
+
   const user = await storage.getUser(req.session.userId);
   if (!user) {
     return res.status(401).json({ message: "User not found" });
   }
-  
+
   // Check if user is blacklisted
   if (user.blacklisted) {
     req.session.destroy(() => {});
     return res.status(403).json({ message: "Account suspended" });
   }
-  
+
   req.user = user;
   next();
 };
@@ -94,12 +94,12 @@ const requireRole = (roles: string[]) => {
     if (!req.session.userId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    
+
     const user = await storage.getUser(req.session.userId);
     if (!user || !roles.includes(user.role)) {
       return res.status(403).json({ message: "Forbidden" });
     }
-    
+
     req.user = user;
     next();
   };
@@ -129,25 +129,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/register", async (req, res) => {
     try {
       const userData = insertUserSchema.parse(req.body);
-      
+
       // Check if user already exists
       const existingUser = await storage.getUserByEmail(userData.email);
       if (existingUser) {
         return res.status(409).json({ message: "User already exists" });
       }
-      
+
       // Hash password
       const hashedPassword = await bcrypt.hash(userData.password, 10);
-      
+
       // Create user
       const user = await storage.createUser({
         ...userData,
         password: hashedPassword,
       });
-      
+
       // Set session
       req.session.userId = user.id;
-      
+
       res.json({ 
         id: user.id, 
         email: user.email, 
@@ -163,19 +163,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/login", async (req, res) => {
     try {
       const { email, password } = loginSchema.parse(req.body);
-      
+
       const user = await storage.getUserByEmail(email);
       if (!user) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
-      
+
       const isValidPassword = await bcrypt.compare(password, user.password);
       if (!isValidPassword) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
-      
+
       req.session.userId = user.id;
-      
+
       res.json({ 
         id: user.id, 
         email: user.email, 
@@ -220,7 +220,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.session.userId;
       const user = req.user;
-      
+
       // Check monthly limit for customers only
       if (user.role === "customer") {
         const orderCount = await storage.getUserOrdersThisMonth(userId);
@@ -230,10 +230,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
       }
-      
+
       const orderData = insertOrderSchema.parse(req.body);
       const order = await storage.createOrder({ ...orderData, userId });
-      
+
       res.json(order);
     } catch (error: any) {
       res.status(400).json({ message: error.message });
@@ -246,7 +246,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user) {
         return res.status(401).json({ message: "User not found" });
       }
-      
+
       let orders;
       if (user.role === "customer") {
         orders = await storage.getOrdersByUser(req.session.userId);
@@ -254,7 +254,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Team members can see all orders
         orders = await storage.getAllOrders();
       }
-      
+
       res.json(orders);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
@@ -265,16 +265,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const orderId = parseInt(req.params.id);
       const order = await storage.getOrder(orderId);
-      
+
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
-      
+
       const user = await storage.getUser(req.session.userId);
       if (user?.role === "customer" && order.userId !== req.session.userId) {
         return res.status(403).json({ message: "Access denied" });
       }
-      
+
       res.json(order);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
@@ -285,7 +285,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const orderId = parseInt(req.params.id);
       const updateData = updateOrderStatusSchema.parse(req.body);
-      
+
       await storage.updateOrderStatus(orderId, updateData);
       res.json({ message: "Order updated successfully" });
     } catch (error: any) {
@@ -303,16 +303,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Team management routes
-  app.get("/api/team", requireRole(["dev", "admin", "owner"]), async (req: any, res) => {
-    try {
-      const teamMembers = await storage.getTeamMembers();
-      res.json(teamMembers);
-    } catch (error) {
-      res.status(500).json({ message: "Internal server error" });
-    }
-  });
-
+  // User management routes - Combined Team and User management
   app.get("/api/users", requireRole(["dev", "admin", "owner"]), async (req: any, res) => {
     try {
       const users = await storage.getAllUsers();
@@ -322,35 +313,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/team", requireRole(["admin", "owner"]), async (req: any, res) => {
+  app.post("/api/users", requireRole(["admin", "owner"]), async (req: any, res) => {
     try {
       const currentUser = req.user;
       const memberData = addTeamMemberSchema.parse(req.body);
-      
+
       // Check permissions - admins can only add devs
       if (currentUser.role === "admin" && memberData.role === "admin") {
         return res.status(403).json({ 
           message: "Admins can only add developers" 
         });
       }
-      
+
       // Check if user already exists
       const existingUser = await storage.getUserByEmail(memberData.email);
       if (existingUser) {
         return res.status(409).json({ message: "User already exists" });
       }
-      
+
       // Generate temporary password
       const tempPassword = Math.random().toString(36).slice(-8);
       const hashedPassword = await bcrypt.hash(tempPassword, 10);
-      
+
       const user = await storage.createUser({
         email: memberData.email,
         password: hashedPassword,
         role: memberData.role,
         notes: memberData.notes,
       });
-      
+
       res.json({ 
         user: {
           id: user.id,
@@ -366,11 +357,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/team/:id/notes", requireRole(["admin", "owner"]), async (req: any, res) => {
+  app.patch("/api/users/:id/notes", requireRole(["admin", "owner"]), async (req: any, res) => {
     try {
       const userId = parseInt(req.params.id);
       const { notes } = req.body;
-      
+
       await storage.updateUserNotes(userId, notes);
       res.json({ message: "Notes updated successfully" });
     } catch (error) {
@@ -378,15 +369,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/team/:id", requireRole(["owner"]), async (req: any, res) => {
+  app.delete("/api/users/:id", requireRole(["owner"]), async (req: any, res) => {
     try {
       const userId = parseInt(req.params.id);
-      
+
       // Don't allow deleting yourself
       if (userId === req.session.userId) {
         return res.status(400).json({ message: "Cannot delete yourself" });
       }
-      
+
       await storage.deleteUser(userId);
       res.json({ message: "User deleted successfully" });
     } catch (error) {
@@ -394,16 +385,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/team/:id/blacklist", requireRole(["admin", "owner"]), async (req: any, res) => {
+  app.patch("/api/users/:id/blacklist", requireRole(["admin", "owner"]), async (req: any, res) => {
     try {
       const userId = parseInt(req.params.id);
       const { blacklisted } = req.body;
-      
+
       // Don't allow blacklisting yourself
       if (userId === req.session.userId) {
         return res.status(400).json({ message: "Cannot blacklist yourself" });
       }
-      
+
       await storage.updateUserBlacklist(userId, blacklisted);
       res.json({ message: "User blacklist status updated" });
     } catch (error) {
@@ -411,21 +402,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/team/:id/role", requireRole(["owner"]), async (req: any, res) => {
+  app.patch("/api/users/:id/role", requireRole(["owner"]), async (req: any, res) => {
     try {
       const userId = parseInt(req.params.id);
       const { role } = req.body;
-      
+
       // Don't allow changing your own role
       if (userId === req.session.userId) {
         return res.status(400).json({ message: "Cannot change your own role" });
       }
-      
+
       // Validate role
       if (!["customer", "dev", "admin", "owner"].includes(role)) {
         return res.status(400).json({ message: "Invalid role" });
       }
-      
+
       await storage.updateUserRole(userId, role);
       res.json({ message: "User role updated successfully" });
     } catch (error) {
@@ -449,7 +440,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!ip) {
         return res.status(400).json({ message: "IP address is required" });
       }
-      
+
       await storage.addIPToBlacklist(ip);
       res.json({ message: "IP added to blacklist" });
     } catch (error) {

@@ -36,10 +36,6 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       ? [{ name: "Team Dashboard", href: "/team-dashboard", icon: Users }] 
       : []
     ),
-    ...(user && canAddTeamMembers(user.role) 
-      ? [{ name: "Team Management", href: "/team", icon: Users }] 
-      : []
-    ),
     { name: "Rechtliches", href: "/legal", icon: Shield },
     { name: "Impressum", href: "/impressum", icon: FileText },
   ];
@@ -100,20 +96,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               );
             })}
              {user && canAddTeamMembers(user.role) && (
-            <>
-              <Link href="/team">
+            
+              <Link href="/user-management">
                 <a className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-novarix-text hover:text-white hover:bg-novarix-tertiary group">
                   <Users className="mr-3 h-5 w-5 text-novarix-muted group-hover:text-novarix-purple" />
-                  Team
+                  Team Management
                 </a>
               </Link>
-              <Link href="/users">
-                <a className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-novarix-text hover:text-white hover:bg-novarix-tertiary group">
-                  <UserCog className="mr-3 h-5 w-5 text-novarix-muted group-hover:text-novarix-purple" />
-                  Benutzerverwaltung
-                </a>
-              </Link>
-            </>
+           
           )}
           </nav>
 
