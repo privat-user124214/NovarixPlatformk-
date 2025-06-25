@@ -1,4 +1,4 @@
-import express, { type Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import session from "express-session";
 import cookieParser from "cookie-parser";
@@ -9,9 +9,9 @@ const app = express();
 
 // 🌍 Erlaube Frontends (lokal und deployed)
 const allowedOrigins = [
-  "http://localhost:5173",              // Lokale Entwicklung
-  "https://novarixclient.onrender.com", // Deployment (Frontend)
-  "https://novarixplatformk.onrender.com" 
+  "http://localhost:5173",
+  "https://novarixclient.onrender.com",
+  "https://novarixplatformk.onrender.com",
 ];
 
 // 🧱 Middleware
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: function (origin, callback) {
+    origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -32,17 +32,16 @@ app.use(
   })
 );
 
-
 // 📝 Logging für API-Routen
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+  let capturedJsonResponse: Record<string, any> | undefined;
 
   const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
+  res.json = function (body, ...args) {
+    capturedJsonResponse = body;
+    return originalResJson.apply(res, [body, ...args]);
   };
 
   res.on("finish", () => {
@@ -68,15 +67,14 @@ app.use((req, res, next) => {
   const server = await registerRoutes(app);
 
   // 🛠 Fehlerbehandlung
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-
-    // ⛔ Kein throw – Render mag das nicht
-    console.error("Serverfehler:", err);
-  });
+  app.use(
+    (err: any, _req: Request, res: Response, _next: NextFunction) => {
+      const status = err.status || err.statusCode || 500;
+      const message = err.message || "Interner Serverfehler";
+      console.error("Serverfehler:", err);
+      res.status(status).json({ message });
+    }
+  );
 
   if (app.get("env") === "development") {
     await setupVite(app, server);
@@ -84,7 +82,6 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // 🌐 Port korrekt setzen
   const port = process.env.PORT || 5000;
   server.listen(
     {
