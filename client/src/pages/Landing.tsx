@@ -27,15 +27,15 @@ export default function Landing() {
         </Card>
 
         {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+        <div className="text-center mb-12 sm:mb-16">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 sm:mb-6">
             Professionelle Bot-Entwicklung
           </h1>
-          <p className="text-xl text-[#3c445c] mb-8 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-[#3c445c] mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
             Individuelle Discord-Bot-Entwicklung für Ihr Projekt. Von Security-Systemen bis zu 
             benutzerdefinierten Funktionen – wir realisieren Ihre Bot-Ideen.
           </p>
-          <div className="space-x-4">
+          <div className="flex flex-col sm:flex-row gap-4 sm:space-x-4 sm:gap-0 justify-center">
             <Link href="/register">
               <Button size="lg" className="bg-novarix-purple hover:bg-novarix-purple-dark">
                 Jetzt registrieren
