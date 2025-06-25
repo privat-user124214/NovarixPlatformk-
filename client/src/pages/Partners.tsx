@@ -110,11 +110,11 @@ export default function Partners() {
                   <div className="flex items-center gap-2 mb-2">
                     <CardTitle className="text-white text-lg">{partner.name}</CardTitle>
                     {partner.isVerified && (
-                      <div className="relative group">
+                      <div className="relative group mt-1">
                         <img 
                           src={verifiedBadge} 
                           alt="Verifiziert" 
-                          className="h-7 w-7"
+                          className="h-6 w-6"
                         />
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                           Verifizierter Partner

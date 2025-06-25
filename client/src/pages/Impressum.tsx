@@ -30,9 +30,14 @@ export default function Impressum() {
                   Novarix Studio ist ein privates Hobby-Projekt und kein gewerbliches Unternehmen. 
                   Wir bieten Discord-Bot-Entwicklung als kostenlose Dienstleistung für die Community an.
                 </p>
+                <p className="mb-3">
+                  <strong>Betreiber:</strong> Timo Weber<br />
+                  <strong>Inhaber:</strong> Lenny Spengler
+                </p>
                 <p>
-                  <strong>Projektleitung:</strong><br />
-                  Lenny Winkler<br />
+                  <strong>Adresse:</strong><br />
+                  Koppoldstr. 1<br />
+                  86551 Aichach<br />
                   Deutschland
                 </p>
               </div>
