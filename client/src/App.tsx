@@ -22,7 +22,8 @@ import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 
 function Router() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user, error } = useAuth();
+  console.log({ isAuthenticated, user, error }); // 👈 Debug-Ausgabe
 
   if (isLoading) {
     return (
