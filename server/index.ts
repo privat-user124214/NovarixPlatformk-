@@ -5,6 +5,9 @@ import cookieParser from "cookie-parser";
 import { registerRoutes } from "./routes";
 import "dotenv/config";
 import { setupVite, serveStatic, log } from "./vite";
+import express from 'express'; // korrekt, wenn express installiert ist
+import someMissingPackage from 'some-missing-package'; // ❌ wird den Fehler verursachen
+
 
 const app = express();
 
