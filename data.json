@@ -37,9 +37,19 @@
       "id": 4,
       "createdAt": "2025-06-25T02:58:48.572Z",
       "updatedAt": "2025-06-25T02:58:48.572Z"
+    },
+    {
+      "email": "ki@novarix-studio.de",
+      "password": "$2b$10$Sc/xKQKxHLHqiEb/FeZJ0u59m8M6AllbvxaL8V4iGS/oPltqVSLmm",
+      "firstName": "frew",
+      "lastName": "rfedw",
+      "id": 5,
+      "createdAt": "2025-06-25T03:08:12.836Z",
+      "updatedAt": "2025-06-25T03:08:12.836Z"
     }
   ],
   "orders": [],
-  "nextUserId": 5,
-  "nextOrderId": 1
+  "nextUserId": 6,
+  "nextOrderId": 1,
+  "blacklistedIPs": []
 }
