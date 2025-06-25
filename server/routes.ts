@@ -41,6 +41,52 @@ function getSession() {
   });
 }
 
+import { PrismaClient } from "@prisma/client";
+import { compare } from "bcryptjs";
+
+const prisma = new PrismaClient();
+
+app.post("/api/auth/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await prisma.user.findUnique({ where: { email } });
+
+  if (!user || !(await compare(password, user.password))) {
+    return res.status(401).send("Invalid credentials");
+  }
+
+  req.session.userId = user.id;
+  req.session.save(() => {
+    res.json({
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    });
+  });
+});
+
+app.get("/api/auth/user", async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: req.session.userId },
+    select: {
+      id: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+      role: true,
+    },
+  });
+
+  res.json(user);
+});
+
+
 // Auth middleware
 const requireAuth = async (req: any, res: any, next: any) => {
   if (!req.session.userId) {
