@@ -42,7 +42,8 @@ function Router() {
         <Route path="/privacy" component={Privacy} />
         <Route path="/legal" component={Legal} />
         <Route path="/impressum" component={Impressum} />
-        <Route component={Landing} />
+        <Route path="/" component={Landing} />
+        <Route component={NotFound} />
       </Switch>
     );
   }
