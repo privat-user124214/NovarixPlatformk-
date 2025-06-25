@@ -9,7 +9,8 @@ import {
   MessageSquare,
   Shield,
   FileText,
-  X
+  X,
+  UserCog
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -56,7 +57,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           onClick={onClose}
         />
       )}
-      
+
       {/* Sidebar */}
       <div className={`
         fixed lg:static inset-y-0 left-0 z-30 w-64 bg-novarix-secondary 
@@ -71,13 +72,13 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               <X className="h-6 w-6 text-novarix-text" />
             </Button>
           </div>
-          
+
           {/* Navigation */}
           <nav className="flex-1 px-2 py-4 space-y-1">
             <div className="hidden lg:block mb-8 px-2">
               <span className="text-lg font-semibold text-white">Navigation</span>
             </div>
-            
+
             {navigation.map((item) => {
               const Icon = item.icon;
               return (
@@ -98,8 +99,24 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 </Link>
               );
             })}
+             {user && canAddTeamMembers(user.role) && (
+            <>
+              <Link href="/team">
+                <a className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-novarix-text hover:text-white hover:bg-novarix-tertiary group">
+                  <Users className="mr-3 h-5 w-5 text-novarix-muted group-hover:text-novarix-purple" />
+                  Team
+                </a>
+              </Link>
+              <Link href="/users">
+                <a className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-novarix-text hover:text-white hover:bg-novarix-tertiary group">
+                  <UserCog className="mr-3 h-5 w-5 text-novarix-muted group-hover:text-novarix-purple" />
+                  Benutzerverwaltung
+                </a>
+              </Link>
+            </>
+          )}
           </nav>
-          
+
           {/* Contact info */}
           <div className="px-2 pb-4">
             <div className="bg-novarix-tertiary p-4 rounded-lg">

@@ -12,6 +12,7 @@ import Orders from "@/pages/Orders";
 import NewOrder from "@/pages/NewOrder";
 import Team from "@/pages/Team";
 import TeamDashboard from "@/pages/TeamDashboard";
+import UserManagement from "./pages/UserManagement";
 import Legal from "@/pages/Legal";
 import Impressum from "@/pages/Impressum";
 import Login from "@/pages/Login";
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/new-order" component={NewOrder} />
         <Route path="/team-dashboard" component={TeamDashboard} />
         <Route path="/team" component={Team} />
+        <Route path="/users" component={UserManagement} />
         <Route path="/legal" component={Legal} />
         <Route path="/impressum" component={Impressum} />
         <Route component={NotFound} />

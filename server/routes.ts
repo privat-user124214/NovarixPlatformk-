@@ -79,6 +79,12 @@ const requireAuth = async (req: any, res: any, next: any) => {
     return res.status(401).json({ message: "User not found" });
   }
   
+  // Check if user is blacklisted
+  if (user.blacklisted) {
+    req.session.destroy(() => {});
+    return res.status(403).json({ message: "Account suspended" });
+  }
+  
   req.user = user;
   next();
 };
@@ -307,6 +313,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/users", requireRole(["admin", "owner"]), async (req: any, res) => {
+    try {
+      const users = await storage.getAllUsers();
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   app.post("/api/team", requireRole(["admin", "owner"]), async (req: any, res) => {
     try {
       const currentUser = req.user;
@@ -374,6 +389,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       await storage.deleteUser(userId);
       res.json({ message: "User deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.patch("/api/team/:id/blacklist", requireRole(["admin", "owner"]), async (req: any, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const { blacklisted } = req.body;
+      
+      // Don't allow blacklisting yourself
+      if (userId === req.session.userId) {
+        return res.status(400).json({ message: "Cannot blacklist yourself" });
+      }
+      
+      await storage.updateUserBlacklist(userId, blacklisted);
+      res.json({ message: "User blacklist status updated" });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.patch("/api/team/:id/role", requireRole(["owner"]), async (req: any, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const { role } = req.body;
+      
+      // Don't allow changing your own role
+      if (userId === req.session.userId) {
+        return res.status(400).json({ message: "Cannot change your own role" });
+      }
+      
+      // Validate role
+      if (!["customer", "dev", "admin", "owner"].includes(role)) {
+        return res.status(400).json({ message: "Invalid role" });
+      }
+      
+      await storage.updateUserRole(userId, role);
+      res.json({ message: "User role updated successfully" });
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
     }

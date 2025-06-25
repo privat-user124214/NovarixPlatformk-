@@ -13,6 +13,7 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
   notes: text("notes"), // For team member notes
+  blacklisted: boolean("blacklisted").default(false),
 });
 
 export const orders = pgTable("orders", {
@@ -44,6 +45,7 @@ export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+  blacklisted: true,
 });
 
 export const loginSchema = z.object({

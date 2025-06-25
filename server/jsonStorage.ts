@@ -23,7 +23,10 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUserNotes(id: number, notes: string): Promise<void>;
+  updateUserBlacklist(id: number, blacklisted: boolean): Promise<void>;
+  updateUserRole(id: number, role: string): Promise<void>;
   getTeamMembers(): Promise<User[]>;
+  getAllUsers(): Promise<User[]>;
   deleteUser(id: number): Promise<void>;
 
   // Order operations
@@ -129,10 +132,36 @@ export class JsonStorage implements IStorage {
     }
   }
 
+  async updateUserBlacklist(id: number, blacklisted: boolean): Promise<void> {
+    const data = await this.loadData();
+    const user = data.users.find(u => u.id === id);
+    if (user) {
+      user.blacklisted = blacklisted;
+      user.updatedAt = new Date();
+      await this.saveData(data);
+    }
+  }
+
+  async updateUserRole(id: number, role: string): Promise<void> {
+    const data = await this.loadData();
+    const user = data.users.find(u => u.id === id);
+    if (user) {
+      user.role = role;
+      user.updatedAt = new Date();
+      await this.saveData(data);
+    }
+  }
+
   async getTeamMembers(): Promise<User[]> {
     const data = await this.loadData();
     return data.users
       .filter(user => ["dev", "admin", "owner"].includes(user.role))
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    const data = await this.loadData();
+    return data.users
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
