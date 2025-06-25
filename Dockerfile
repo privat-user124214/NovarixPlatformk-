@@ -19,3 +19,4 @@ RUN npm run build
 
 # App starten (falls du eine Production-Start-Anweisung brauchst, z.B.)
 CMD ["node", "dist/index.js"]
+CMD ["ls", "-la", "/app/dist"]
