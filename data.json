@@ -1,0 +1,27 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "lenny.winkler.de@gmail.com",
+      "password": "$2b$10$nSATq1FNJtibphtJSQh/K.nt5tKT244ZaCdw6OEGrVpWfduMbOII6",
+      "role": "owner",
+      "firstName": "Lenny",
+      "lastName": "Winkler",
+      "createdAt": "2025-06-25T02:39:39.057Z",
+      "updatedAt": "2025-06-25T02:39:39.057Z",
+      "notes": "System Owner"
+    },
+    {
+      "email": "lenny.winkler.dc@gmail.com",
+      "password": "$2b$10$JhzeNN18XmIMQQ5buA.cZuhnQsvTANR4yAw.gMmyHNtK226i.gP1a",
+      "firstName": "Lenny",
+      "lastName": "Winkler",
+      "id": 2,
+      "createdAt": "2025-06-25T02:40:02.682Z",
+      "updatedAt": "2025-06-25T02:40:02.682Z"
+    }
+  ],
+  "orders": [],
+  "nextUserId": 3,
+  "nextOrderId": 1
+}

@@ -110,13 +110,13 @@ export default function Team() {
   const getRoleColor = (role: string) => {
     switch (role) {
       case "owner":
-        return "bg-red-100 text-red-800";
+        return "bg-red-200 text-red-900";
       case "admin":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-200 text-yellow-900";
       case "dev":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-200 text-blue-900";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-200 text-gray-900";
     }
   };
 

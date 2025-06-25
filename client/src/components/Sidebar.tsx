@@ -8,6 +8,7 @@ import {
   Mail, 
   MessageSquare,
   Shield,
+  FileText,
   X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       : []
     ),
     { name: "Rechtliches", href: "/legal", icon: Shield },
+    { name: "Impressum", href: "/impressum", icon: FileText },
   ];
 
   const isActive = (href: string) => {

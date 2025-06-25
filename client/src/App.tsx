@@ -13,6 +13,7 @@ import NewOrder from "@/pages/NewOrder";
 import Team from "@/pages/Team";
 import TeamDashboard from "@/pages/TeamDashboard";
 import Legal from "@/pages/Legal";
+import Impressum from "@/pages/Impressum";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/team-dashboard" component={TeamDashboard} />
         <Route path="/team" component={Team} />
         <Route path="/legal" component={Legal} />
+        <Route path="/impressum" component={Impressum} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
