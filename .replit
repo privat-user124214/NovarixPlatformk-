@@ -34,3 +34,12 @@ author = "agent"
 task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
+
+[[workflows.workflow]]
+name = "w"
+mode = "sequential"
+author = 44236152
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git remote add origin git@github.com:privat-user124214/downloade.git"
