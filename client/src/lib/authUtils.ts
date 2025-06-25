@@ -3,7 +3,7 @@ export function isUnauthorizedError(error: Error): boolean {
 }
 
 export function canAddTeamMembers(role: string): boolean {
-  return ["admin", "owner"].includes(role);
+  return ["dev", "admin", "owner"].includes(role);
 }
 
 export function canAddAdmins(role: string): boolean {
@@ -31,5 +31,9 @@ export function isTeamMember(role: string): boolean {
 }
 
 export const canCreateOrders = (role: string) => {
+  return ["customer", "dev", "admin", "owner"].includes(role);
+};
+
+export const canCreateBots = (role: string) => {
   return ["customer", "dev", "admin", "owner"].includes(role);
 };

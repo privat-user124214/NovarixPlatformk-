@@ -221,7 +221,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = req.session.userId;
       const user = req.user;
       
-      // Only check monthly limit for customers, not team members
+      // Check monthly limit for customers only
       if (user.role === "customer") {
         const orderCount = await storage.getUserOrdersThisMonth(userId);
         if (orderCount >= 3) {
@@ -304,7 +304,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Team management routes
-  app.get("/api/team", requireRole(["admin", "owner"]), async (req: any, res) => {
+  app.get("/api/team", requireRole(["dev", "admin", "owner"]), async (req: any, res) => {
     try {
       const teamMembers = await storage.getTeamMembers();
       res.json(teamMembers);
@@ -313,7 +313,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/users", requireRole(["admin", "owner"]), async (req: any, res) => {
+  app.get("/api/users", requireRole(["dev", "admin", "owner"]), async (req: any, res) => {
     try {
       const users = await storage.getAllUsers();
       res.json(users);

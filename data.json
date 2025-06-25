@@ -17,6 +17,7 @@
       "firstName": "Lenny",
       "lastName": "Winkler",
       "id": 2,
+      "role": "admin",
       "createdAt": "2025-06-25T02:54:42.307Z",
       "updatedAt": "2025-06-25T02:54:42.307Z"
     },
@@ -26,6 +27,7 @@
       "firstName": "Lenny",
       "lastName": "Winkler",
       "id": 3,
+      "role": "dev",
       "createdAt": "2025-06-25T02:58:05.622Z",
       "updatedAt": "2025-06-25T02:58:05.622Z"
     },
@@ -35,6 +37,7 @@
       "firstName": "dw",
       "lastName": "wd",
       "id": 4,
+      "role": "customer",
       "createdAt": "2025-06-25T02:58:48.572Z",
       "updatedAt": "2025-06-25T02:58:48.572Z"
     },
@@ -44,6 +47,7 @@
       "firstName": "frew",
       "lastName": "rfedw",
       "id": 5,
+      "role": "dev",
       "createdAt": "2025-06-25T03:08:12.836Z",
       "updatedAt": "2025-06-25T03:08:12.836Z"
     }
