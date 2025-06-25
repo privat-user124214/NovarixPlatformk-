@@ -97,6 +97,9 @@ The application uses PostgreSQL with two main entities:
 # Changelog
 
 - June 25, 2025. Initial setup
+- June 25, 2025. Migrated from PostgreSQL database to JSON file storage system
+- June 25, 2025. Added Team Dashboard for team members (dev, admin, owner roles)
+- June 25, 2025. Enhanced navigation with role-based menu items
 
 # User Preferences
 

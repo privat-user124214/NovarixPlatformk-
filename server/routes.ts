@@ -1,9 +1,8 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./jsonStorage";
 import bcrypt from "bcrypt";
 import session from "express-session";
-import connectPg from "connect-pg-simple";
 import { 
   insertUserSchema, 
   loginSchema, 
@@ -12,20 +11,19 @@ import {
   addTeamMemberSchema
 } from "@shared/schema";
 
+// Extend session data type
+declare module "express-session" {
+  interface SessionData {
+    userId: number;
+  }
+}
+
 // Session configuration
 function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  const pgStore = connectPg(session);
-  const sessionStore = new pgStore({
-    conString: process.env.DATABASE_URL,
-    createTableIfMissing: true,
-    ttl: sessionTtl,
-    tableName: "user_sessions",
-  });
   
   return session({
     secret: process.env.SESSION_SECRET || "your-secret-key-change-in-production",
-    store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {

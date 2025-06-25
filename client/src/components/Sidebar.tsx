@@ -26,7 +26,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const navigation = [
     { name: "Dashboard", href: "/", icon: Home },
     { name: "Aufträge verwalten", href: "/orders", icon: ClipboardList },
-    { name: "Neuer Auftrag", href: "/new-order", icon: Plus },
+    ...(user && user.role === "customer" 
+      ? [{ name: "Neuer Auftrag", href: "/new-order", icon: Plus }] 
+      : []
+    ),
+    ...(user && isTeamMember(user.role) 
+      ? [{ name: "Team Dashboard", href: "/team-dashboard", icon: Users }] 
+      : []
+    ),
     ...(user && canAddTeamMembers(user.role) 
       ? [{ name: "Team Management", href: "/team", icon: Users }] 
       : []
