@@ -20,9 +20,24 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// 🛡️ Session-Konfiguration
+app.use(session({
+  name: "sid",
+  secret: process.env.SESSION_SECRET || "default_secret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === "production",
+    httpOnly: true,
+    sameSite: "lax",
+    maxAge: 1000 * 60 * 60 * 2, // 2h
+  },
+}));
+
+// 🔓 CORS mit dynamischer Origin-Validierung
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -33,7 +48,7 @@ app.use(
   })
 );
 
-// 📝 Logging für API-Routen
+// 📋 Logging für API-Routen
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -52,11 +67,9 @@ app.use((req, res, next) => {
       if (capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
-
       if (logLine.length > 80) {
         logLine = logLine.slice(0, 79) + "…";
       }
-
       log(logLine);
     }
   });
@@ -64,19 +77,26 @@ app.use((req, res, next) => {
   next();
 });
 
+// 🚀 Server-Start
 (async () => {
-  const server = await registerRoutes(app);
+  let server;
 
-  // 🛠 Fehlerbehandlung
-  app.use(
-    (err: any, _req: Request, res: Response, _next: NextFunction) => {
-      const status = err.status || err.statusCode || 500;
-      const message = err.message || "Interner Serverfehler";
-      console.error("Serverfehler:", err);
-      res.status(status).json({ message });
-    }
-  );
+  try {
+    server = await registerRoutes(app);
+  } catch (err) {
+    console.error("❌ Fehler beim Initialisieren der Routen:", err);
+    process.exit(1);
+  }
 
+  // ⚠️ Fehlerbehandlung
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Interner Serverfehler";
+    console.error("❌ Fehler:", err);
+    res.status(status).json({ message });
+  });
+
+  // 🧪 Umgebungsspezifisches Verhalten
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
