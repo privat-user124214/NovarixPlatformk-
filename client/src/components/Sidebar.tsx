@@ -64,7 +64,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       {/* Sidebar */}
       <div className={`
-        fixed lg:static inset-y-0 left-0 z-30 w-64 bg-novarix-secondary 
+        fixed lg:static inset-y-0 left-0 z-30 w-64 sm:w-72 bg-novarix-secondary 
         transform transition-transform duration-300 ease-in-out lg:transform-none
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
@@ -89,7 +89,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 <Link key={item.name} href={item.href}>
                   <a
                     className={`
-                      group flex items-center px-2 py-2 text-sm font-medium rounded-md
+                      group flex items-center px-3 py-3 text-sm font-medium rounded-md touch-target
                       ${isActive(item.href)
                         ? 'bg-novarix-purple text-white'
                         : 'text-[#3c445c] hover:text-white hover:bg-novarix-tertiary'

@@ -93,6 +93,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Session middleware
   app.use(getSession());
 
+  // Health check endpoint for deployment platforms
+  app.get("/api/health", (req, res) => {
+    res.status(200).json({ 
+      status: "ok", 
+      timestamp: new Date().toISOString(),
+      service: "novarix-studio",
+      version: "1.0.0"
+    });
+  });
+
   // Auth routes
   app.post("/api/auth/register", async (req, res) => {
     try {

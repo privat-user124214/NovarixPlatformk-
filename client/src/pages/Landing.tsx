@@ -10,7 +10,7 @@ export default function Landing() {
       <LandingHeader />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto mobile-spacing px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Service Notice */}
         <Card className="mb-12 bg-novarix-purple/20 border-novarix-purple">
           <CardContent className="p-6">

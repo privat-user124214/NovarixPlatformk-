@@ -79,8 +79,8 @@ export default function Register() {
           </CardDescription>
         </CardHeader>
         
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <CardContent className="p-4 sm:p-6">
+          <form onSubmit={handleSubmit} className="space-y-4 mobile-form">
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="firstName" className="text-[#3c445c]">Vorname</Label>

@@ -37,6 +37,43 @@
   --novarix-border: hsl(215, 20%, 20%);
 }
 
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .mobile-spacing {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .mobile-text {
+    font-size: 0.875rem;
+  }
+  
+  .mobile-touch {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  .touch-target {
+    min-height: 44px;
+    padding: 12px;
+  }
+  
+  button, a {
+    min-height: 44px;
+  }
+}
+
+/* Improved mobile forms */
+.mobile-form input, 
+.mobile-form textarea, 
+.mobile-form select {
+  font-size: 16px; /* Prevents zoom on iOS */
+  padding: 12px;
+}
+
 .dark {
   --background: hsl(217, 19%, 9%);
   --foreground: hsl(217, 10%, 75%);
