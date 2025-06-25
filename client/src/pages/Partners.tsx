@@ -63,9 +63,12 @@ export default function Partners() {
 
   if (error) {
     return (
-      <div className="text-center py-12">
-        <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
-        <p className="text-red-400">Fehler beim Laden der Partner</p>
+      <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
+        {!isAuthenticated && <LandingHeader />}
+        <div className={`text-center py-12 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
+          <h1 className="text-3xl font-bold text-white mb-2">Unsere Partner</h1>
+          <p className="text-red-400">Fehler beim Laden der Partner</p>
+        </div>
       </div>
     );
   }

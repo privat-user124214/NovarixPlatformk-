@@ -1,4 +1,7 @@
 import { Link, useLocation } from "wouter";
+import { useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Home, 
   ClipboardList, 
@@ -11,7 +14,8 @@ import {
   FileText,
   X,
   UserCog,
-  Handshake
+  Handshake,
+  LogOut
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
