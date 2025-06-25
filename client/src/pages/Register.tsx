@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { LandingHeader } from "@/components/LandingHeader";
 
 export default function Register() {
   const { toast } = useToast();
@@ -70,7 +71,9 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-novarix flex items-center justify-center mobile-spacing py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-novarix">
+      <LandingHeader />
+      <div className="flex items-center justify-center mobile-spacing py-8 sm:py-12 px-4 sm:px-6 lg:px-8" style={{ minHeight: 'calc(100vh - 64px)' }}>
       <Card className="w-full max-w-md bg-novarix-secondary border-novarix">
         <CardHeader className="text-center p-4 sm:p-6">
           <CardTitle className="text-xl sm:text-2xl font-bold text-white">Novarix Studio</CardTitle>
@@ -169,6 +172,7 @@ export default function Register() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }
