@@ -1,5 +1,3 @@
-CMD ["node", "dist/index.js"]
-
 
 # Basis-Image
 FROM node:20-alpine
