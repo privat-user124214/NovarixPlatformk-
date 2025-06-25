@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(262, 83%, 58%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Novarix Studio custom colors */
+  --novarix-bg: hsl(217, 19%, 9%);
+  --novarix-bg-secondary: hsl(215, 16%, 12%);
+  --novarix-bg-tertiary: hsl(215, 20%, 17%);
+  --novarix-text: hsl(217, 10%, 75%);
+  --novarix-text-secondary: hsl(215, 15%, 65%);
+  --novarix-text-muted: hsl(215, 10%, 40%);
+  --novarix-purple: hsl(262, 83%, 58%);
+  --novarix-purple-dark: hsl(258, 90%, 48%);
+  --novarix-purple-light: hsl(266, 85%, 68%);
+  --novarix-border: hsl(215, 20%, 20%);
+}
+
+.dark {
+  --background: hsl(217, 19%, 9%);
+  --foreground: hsl(217, 10%, 75%);
+  --muted: hsl(215, 20%, 17%);
+  --muted-foreground: hsl(215, 10%, 40%);
+  --popover: hsl(215, 16%, 12%);
+  --popover-foreground: hsl(217, 10%, 75%);
+  --card: hsl(215, 16%, 12%);
+  --card-foreground: hsl(217, 10%, 75%);
+  --border: hsl(215, 20%, 20%);
+  --input: hsl(215, 20%, 17%);
+  --primary: hsl(262, 83%, 58%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(215, 20%, 17%);
+  --secondary-foreground: hsl(217, 10%, 75%);
+  --accent: hsl(215, 20%, 17%);
+  --accent-foreground: hsl(217, 10%, 75%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(262, 83%, 58%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    background-color: var(--novarix-bg);
+    color: var(--novarix-text);
+  }
+}
+
+@layer utilities {
+  .bg-novarix {
+    background-color: var(--novarix-bg);
+  }
+  
+  .bg-novarix-secondary {
+    background-color: var(--novarix-bg-secondary);
+  }
+  
+  .bg-novarix-tertiary {
+    background-color: var(--novarix-bg-tertiary);
+  }
+  
+  .text-novarix {
+    color: var(--novarix-text);
+  }
+  
+  .text-novarix-secondary {
+    color: var(--novarix-text-secondary);
+  }
+  
+  .text-novarix-muted {
+    color: var(--novarix-text-muted);
+  }
+  
+  .border-novarix {
+    border-color: var(--novarix-border);
+  }
+  
+  .bg-novarix-purple {
+    background-color: var(--novarix-purple);
+  }
+  
+  .text-novarix-purple {
+    color: var(--novarix-purple);
+  }
+  
+  .hover\:bg-novarix-purple-dark:hover {
+    background-color: var(--novarix-purple-dark);
+  }
+}
