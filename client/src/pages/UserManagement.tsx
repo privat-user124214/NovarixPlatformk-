@@ -51,11 +51,11 @@ export default function UserManagement() {
 
   const { data: users = [], isLoading } = useQuery<User[]>({
     queryKey: ["/api/users"],
-    enabled: !!user && canAddTeamMembers(user.role),
+    enabled: !!user && (user.role === "admin" || user.role === "owner"),
   });
 
   const addMemberMutation = useMutation({
-    mutationFn: (data: AddMemberForm) => apiRequest("POST", "/api/team", data),
+    mutationFn: (data: AddMemberForm) => apiRequest("POST", "/api/users", data),
     onSuccess: (response: any) => {
       toast({
         title: "Benutzer hinzugefügt",
@@ -77,7 +77,7 @@ export default function UserManagement() {
 
   const updateNotesMutation = useMutation({
     mutationFn: ({ id, notes }: { id: number; notes: string }) =>
-      apiRequest("PATCH", `/api/team/${id}/notes`, { notes }),
+      apiRequest("PATCH", `/api/users/${id}/notes`, { notes }),
     onSuccess: () => {
       toast({
         title: "Notizen aktualisiert",
@@ -97,7 +97,7 @@ export default function UserManagement() {
 
   const blacklistMutation = useMutation({
     mutationFn: ({ id, blacklisted }: { id: number; blacklisted: boolean }) =>
-      apiRequest("PATCH", `/api/team/${id}/blacklist`, { blacklisted }),
+      apiRequest("PATCH", `/api/users/${id}/blacklist`, { blacklisted }),
     onSuccess: () => {
       toast({
         title: "Blacklist Status aktualisiert",
@@ -116,7 +116,7 @@ export default function UserManagement() {
 
   const roleChangeMutation = useMutation({
     mutationFn: ({ id, role }: { id: number; role: string }) =>
-      apiRequest("PATCH", `/api/team/${id}/role`, { role }),
+      apiRequest("PATCH", `/api/users/${id}/role`, { role }),
     onSuccess: () => {
       toast({
         title: "Rolle geändert",
@@ -134,7 +134,7 @@ export default function UserManagement() {
   });
 
   const deleteMemberMutation = useMutation({
-    mutationFn: (id: number) => apiRequest("DELETE", `/api/team/${id}`),
+    mutationFn: (id: number) => apiRequest("DELETE", `/api/users/${id}`),
     onSuccess: () => {
       toast({
         title: "Benutzer entfernt",
@@ -219,7 +219,7 @@ export default function UserManagement() {
     return matchesSearch && matchesRole;
   });
 
-  if (!user || !canAddTeamMembers(user.role)) {
+  if (!user || (user.role !== "admin" && user.role !== "owner")) {
     return (
       <div className="p-6">
         <Card className="bg-red-500/20 border-red-500">

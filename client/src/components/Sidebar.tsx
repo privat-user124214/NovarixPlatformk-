@@ -95,7 +95,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 </Link>
               );
             })}
-             {user && canAddTeamMembers(user.role) && (
+             {user && (user.role === "admin" || user.role === "owner") && (
               <Link key="user-management" href="/users">
                 <a
                   className={`
