@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Mail, Globe } from "lucide-react";
 import { LandingHeader } from "@/components/LandingHeader";
 import type { Partner } from "@shared/schema";
-import verifiedBadge from "@/assets/verified-badge.svg";
+import verifiedBadge from "@/assets/verified-badge.png";
 
 export default function Partners() {
   const { data: partners, isLoading, error } = useQuery<Partner[]>({
