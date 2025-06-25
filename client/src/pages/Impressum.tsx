@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LandingHeader } from "@/components/LandingHeader";
 import { useAuth } from "@/hooks/useAuth";
 import { FileText, Users, Mail, MessageSquare } from "lucide-react";
+import verifiedBadge from "@/assets/verified-badge.svg";
 
 export default function Impressum() {
   const { isAuthenticated } = useAuth();
@@ -24,7 +25,19 @@ export default function Impressum() {
           <CardContent>
             <div className="text-sm text-novarix-text space-y-4">
               <div>
-                <h4 className="font-medium text-white mb-2">Novarix Studio</h4>
+                <div className="flex items-center gap-2 mb-2">
+                  <h4 className="font-medium text-white">Novarix Studio</h4>
+                  <div className="relative group">
+                    <img 
+                      src={verifiedBadge} 
+                      alt="Verifiziert" 
+                      className="h-5 w-5"
+                    />
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      Verifizierter Partner
+                    </div>
+                  </div>
+                </div>
                 <p className="text-orange-400 font-medium mb-2">
                   ⚠️ Wichtiger Hinweis: Hobby-Projekt
                 </p>
