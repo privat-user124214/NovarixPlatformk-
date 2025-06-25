@@ -3,6 +3,7 @@ import cors from "cors";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import { registerRoutes } from "./routes";
+import "dotenv/config";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
