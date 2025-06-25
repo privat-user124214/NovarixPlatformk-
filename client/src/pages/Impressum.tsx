@@ -5,12 +5,10 @@ import { FileText, Users, Mail, MessageSquare } from "lucide-react";
 import verifiedBadge from "@/assets/verified-badge.svg";
 
 export default function Impressum() {
-  const { isAuthenticated } = useAuth();
-
   return (
-    <div className={`${!isAuthenticated ? 'min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary' : ''}`}>
-      {!isAuthenticated && <LandingHeader />}
-      <div className={`p-6 ${!isAuthenticated ? 'container mx-auto px-4 py-16' : ''}`}>
+    <div className="min-h-screen bg-gradient-to-br from-novarix-primary to-novarix-secondary">
+      <LandingHeader />
+      <div className="space-y-8 container mx-auto px-4 py-16">
       <h2 className="text-2xl font-bold text-white mb-6">Impressum</h2>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
