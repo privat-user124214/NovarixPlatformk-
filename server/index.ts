@@ -9,7 +9,8 @@ const app = express();
 // 🌍 Erlaube Frontends (lokal und deployed)
 const allowedOrigins = [
   "http://localhost:5173",              // Lokale Entwicklung
-  "https://novarixclient.onrender.com" // Deployment (Frontend)
+  "https://novarixclient.onrender.com", // Deployment (Frontend)
+  "https://novarixplatformk.onrender.com" 
 ];
 
 // 🧱 Middleware
