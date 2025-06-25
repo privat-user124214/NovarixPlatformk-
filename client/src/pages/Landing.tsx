@@ -83,7 +83,7 @@ export default function Landing() {
             <CardHeader>
               <Shield className="h-12 w-12 text-novarix-purple mb-4" />
               <CardTitle className="text-white">Professionelle Qualität</CardTitle>
-              <CardDescription className="text-novarix-text">
+              <CardDescription className="text-[#3c445c]">
                 Sichere, stabile und performante Bot-Lösungen für jeden Anwendungsfall
               </CardDescription>
             </CardHeader>
