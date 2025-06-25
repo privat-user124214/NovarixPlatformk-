@@ -17,9 +17,9 @@
       "firstName": "Lenny",
       "lastName": "Winkler",
       "id": 2,
-      "role": "member",
+      "role": "dev",
       "createdAt": "2025-06-25T02:58:05.622Z",
-      "updatedAt": "2025-06-25T02:58:05.622Z"
+      "updatedAt": "2025-06-25T03:42:41.235Z"
     },
     {
       "email": "ki@novarix-studio.de",
@@ -27,9 +27,9 @@
       "firstName": "frew",
       "lastName": "rfedw",
       "id": 3,
-      "role": "member",
+      "role": "admin",
       "createdAt": "2025-06-25T03:08:12.836Z",
-      "updatedAt": "2025-06-25T03:08:12.836Z"
+      "updatedAt": "2025-06-25T03:46:01.732Z"
     },
     {
       "email": "lenny.winkler.dc@gmail.com",
@@ -39,11 +39,34 @@
       "id": 4,
       "role": "owner",
       "createdAt": "2025-06-25T03:35:21.907Z",
-      "updatedAt": "2025-06-25T03:35:21.907Z"
+      "updatedAt": "2025-06-25T03:42:22.108Z",
+      "notes": "lenny_winki (haupt ACC)"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "discordName": "lenny_winki",
+      "botName": "Test",
+      "description": "dewdefgtzujioüpöä+#äüpöizhtredrtguioöpäü#äpöliujtgrfeftguioöpä",
+      "userId": 4,
+      "id": 1,
+      "status": "pending",
+      "createdAt": "2025-06-25T03:40:39.154Z",
+      "updatedAt": "2025-06-25T03:43:33.162Z",
+      "notes": ""
+    },
+    {
+      "discordName": "lenny_winki",
+      "botName": "ztredw",
+      "description": "z6t5r4ewsz6t5r4e34r5t6zujikop0ßü0pi8z6trfetzuiopoliujzhgtr",
+      "userId": 3,
+      "id": 2,
+      "status": "pending",
+      "createdAt": "2025-06-25T03:44:31.837Z",
+      "updatedAt": "2025-06-25T03:44:31.837Z"
+    }
+  ],
   "nextUserId": 5,
-  "nextOrderId": 1,
+  "nextOrderId": 3,
   "blacklistedIPs": []
 }
